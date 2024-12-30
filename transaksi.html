@@ -37,14 +37,15 @@
             <header class="custom-header">
                 <div class="search-container">
                     <i class="fa fa-search search-icon"></i>
-                    <input type="text" class="search-input" placeholder="Cari..."></div>
+                    <input type="text" class="search-input" placeholder="Cari...">
+                </div>
                 <div class="user-container">
                     <i class="fa fa-user user-icon"></i>
                     <span>Nama Pengguna</span>
                 </div>
             </header>
-        <!-- SAMPAII SINI YAAA -->
-        
+            <!-- SAMPAII SINI YAAA -->
+
             <!-- KALAU BAGIANN SINIII INI DAH MASUK ISINYAA YAAAAA, KALAU BISA MASIH MENGGUNAKAN SECTION CLASSS YAAA -->
             <section class="content">
                 <!-- Table Section -->
@@ -75,8 +76,7 @@
                                 <td>Rp 200,000</td>
                                 <td><img src="qrcode1.png" alt="QR Code"></td>
                                 <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
+                                    <button class="btn detail" data-id="1"><i class="fas fa-info-circle"></i></button>
                                 </td>
                             </tr>
                             <tr>
@@ -89,8 +89,7 @@
                                 <td>Rp 300,000</td>
                                 <td><img src="qrcode2.png" alt="QR Code"></td>
                                 <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
+                                    <button class="btn detail" data-id="2"><i class="fas fa-info-circle"></i></button>
                                 </td>
                             </tr>
                             <tr>
@@ -103,17 +102,38 @@
                                 <td>Rp 100,000</td>
                                 <td><img src="qrcode3.png" alt="QR Code"></td>
                                 <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
+                                    <button class="btn detail" data-id="3"><i class="fas fa-info-circle"></i></button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-            </section>            
+            </section>
+
+            <!-- Modal E-Ticket -->
+            <div id="eticket-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <div class="eticket-container">
+                        <h2>E-Ticket</h2>
+                        <div class="eticket-details">
+                            <p><strong>No. Tiket:</strong> <span id="ticket-no"></span></p>
+                            <p><strong>Tanggal:</strong> <span id="ticket-date"></span></p>
+                            <p><strong>Nama Konser:</strong> <span id="concert-name"></span></p>
+                            <p><strong>Nama:</strong> <span id="buyer-name"></span></p>
+                            <p><strong>Jumlah Tiket:</strong> <span id="ticket-quantity"></span></p>
+                            <p><strong>Total:</strong> <span id="total-price"></span></p>
+                        </div>
+                        <div class="qrcode-container">
+                            <img id="qrcode-img" src="" alt="QR Code">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
-
+    <script src="js/transaksi.js"></script>
 </body>
 
 </html>
