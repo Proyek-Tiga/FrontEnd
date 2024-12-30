@@ -1,116 +1,119 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Daftar Konser</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-    <div class="dashboard">
-        <main class="content-wrap">
-            <header class="content-head d-flex justify-content-between align-items-center">
-                <h1 class="dashboard-title">Daftar Konser</h1>
-                <button class="btn btn-primary" onclick="openAddConcertForm()">
-                    <i class="fas fa-plus"></i> Tambah Konser
-                </button>
-            </header>
-            
-            <table class="table table-striped" id="concertTable">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Lokasi</th>
-                        <th>Kapasitas Orang</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="concertList">
-                    <!-- Data konser akan dimuat di sini -->
-                </tbody>
-            </table>
-        </main>
-    </div>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Modal Tambah Konser -->
-    <div id="addConcertModal" class="modal" tabindex="-1" style="display:none;">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Tambah Konser</h5>
-                    <button type="button" class="btn-close" onclick="closeAddConcertForm()"></button>
+    <!-- Font Chewy -->
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+    <!-- Font Crimson Pro -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-guitar"></i>
+                <h2>AuSa Beats</h2>
+            </div>
+            <nav class="menu">
+                <a href="index.html" class="menu-item active"><i class="fas fa-home"></i> Beranda</a>
+                <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
+                <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
+                <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="custom-header">
+                <div class="search-container">
+                    <i class="fa fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Cari...">
                 </div>
-                <div class="modal-body">
-                    <form id="concertForm">
-                        <div class="mb-3">
-                            <label for="concertLocation" class="form-label">Lokasi:</label>
-                            <input type="text" class="form-control" id="concertLocation" required>
+                <div class="user-container">
+                    <i class="fa fa-user user-icon"></i>
+                    <span>Nama Pengguna</span>
+                </div>
+            </header>
+
+            <section class="content">
+                <!-- Table Section -->
+                <div class="table-container">
+                    <h2>Data Konser</h2>
+                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Konser</button>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Lokasi</th>
+                                <th>Kapasitas Orang</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Stadion Utama Gelora Bung Karno</td>
+                                <td>75,000</td>
+                                <td>
+                                    <button class="btn edit">Edit</button>
+                                    <button class="btn delete">Hapus</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Lapangan Merdeka</td>
+                                <td>10,000</td>
+                                <td>
+                                    <button class="btn edit">Edit</button>
+                                    <button class="btn delete">Hapus</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Gedung Serbaguna</td>
+                                <td>1,500</td>
+                                <td>
+                                    <button class="btn edit">Edit</button>
+                                    <button class="btn delete">Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Popup Form Tambah Konser -->
+            <div class="popup" id="popupTambahKonser" style="display: none;">
+                <div class="popup-content">
+                    <h3>Tambah Konser</h3>
+                    <form id="formTambahKonser">
+                        <label for="lokasi">Lokasi:</label>
+                        <input type="text" id="lokasi" name="lokasi" placeholder="Masukkan lokasi konser" required>
+
+                        <label for="kapasitas">Kapasitas Orang:</label>
+                        <input type="number" id="kapasitas" name="kapasitas" placeholder="Masukkan kapasitas" required>
+
+                        <div class="popup-actions">
+                            <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
+                            <button type="button" class="btn cancel" id="btnBatalTambah" aria-label="Batal">Batal</button>
                         </div>
-                        <div class="mb-3">
-                            <label for="concertCapacity" class="form-label">Kapasitas Orang:</label>
-                            <input type="number" class="form-control" id="concertCapacity" required>
-                        </div>
-                        <button type="button" class="btn btn-primary" onclick="saveConcert()">Simpan</button>
-                        <button type="button" class="btn btn-secondary" onclick="closeAddConcertForm()">Batal</button>
                     </form>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <script>
-        const concertList = document.getElementById('concertList');
-        const modal = document.getElementById('addConcertModal');
-
-        // Fungsi untuk membuka form tambah konser
-        function openAddConcertForm() {
-            modal.style.display = 'block';
-        }
-
-        // Fungsi untuk menutup form tambah konser
-        function closeAddConcertForm() {
-            modal.style.display = 'none';
-            document.getElementById('concertForm').reset();
-        }
-
-        // Fungsi untuk menyimpan konser ke tabel
-        function saveConcert() {
-            const location = document.getElementById('concertLocation').value;
-            const capacity = document.getElementById('concertCapacity').value;
-
-            // Tambahkan data ke tabel
-            const row = document.createElement('tr');
-            const rowNumber = concertList.children.length + 1; // Hitung jumlah baris saat ini
-            row.innerHTML = `
-                <td>${rowNumber}</td>
-                <td>${location}</td>
-                <td>${capacity}</td>
-                <td>
-                    <button class="btn btn-danger btn-sm" onclick="deleteConcert(this)">Hapus</button>
-                </td>
-            `;
-            concertList.appendChild(row);
-
-            // Tutup form
-            closeAddConcertForm();
-        }
-
-        // Fungsi untuk menghapus konser dari tabel
-        function deleteConcert(button) {
-            const row = button.parentElement.parentElement;
-            row.remove();
-            updateRowNumbers(); // Perbarui nomor setelah penghapusan
-        }
-
-        // Fungsi untuk memperbarui nomor baris setelah penghapusan
-        function updateRowNumbers() {
-            const rows = concertList.children;
-            for (let i = 0; i < rows.length; i++) {
-                rows[i].children[0].textContent = i + 1;
-            }
-        }
-    </script>
+    <!-- Link to external JS file -->
+    <script src="js/index.js"></script>
 </body>
+
 </html>
