@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/pembeli.css">
+    <link rel="stylesheet" href="css/transaksi.css">
 
     <!-- Font Chewy -->
     <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
@@ -27,8 +27,8 @@
             <nav class="menu">
                 <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Beranda</a>
                 <a href="#" class="menu-item"><i class="fas fa-music"></i> Konser</a>
-                <a href="pembeli.html" class="menu-item active"><i class="fas fa-users"></i> Pembeli</a>
-                <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
+                <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
+                <a href="transaksi.html" class="menu-item active"><i class="fas fa-receipt"></i> Transaksi</a>
             </nav>
         </aside>
 
@@ -49,23 +49,31 @@
             <section class="content">
                 <!-- Table Section -->
                 <div class="table-container">
-                    <h2>Data Pembeli</h2>
+                    <h2>Data Transaksi</h2>
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>No.Tiket</th>
+                                <th>Tanggal</th>
+                                <th>Nama Konser</th>
                                 <th>Nama</th>
-                                <th>Email</th>
-                                <th>Role</th>
+                                <th>Jumlah Tiket</th>
+                                <th>Total</th>
+                                <th>QrCode</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
+                                <td>TX12345</td>
+                                <td>2024-12-30</td>
+                                <td>Konser A</td>
                                 <td>Ahmad Taufik</td>
-                                <td>ahmad.taufik@example.com</td>
-                                <td>Pembeli</td>
+                                <td>2</td>
+                                <td>Rp 200,000</td>
+                                <td><img src="qrcode1.png" alt="QR Code"></td>
                                 <td>
                                     <button class="btn edit">Edit</button>
                                     <button class="btn delete">Hapus</button>
@@ -73,9 +81,13 @@
                             </tr>
                             <tr>
                                 <td>2</td>
+                                <td>TX12346</td>
+                                <td>2024-12-31</td>
+                                <td>Konser B</td>
                                 <td>Siti Aisyah</td>
-                                <td>siti.aisyah@example.com</td>
-                                <td>Pembeli</td>
+                                <td>3</td>
+                                <td>Rp 300,000</td>
+                                <td><img src="qrcode2.png" alt="QR Code"></td>
                                 <td>
                                     <button class="btn edit">Edit</button>
                                     <button class="btn delete">Hapus</button>
@@ -83,9 +95,13 @@
                             </tr>
                             <tr>
                                 <td>3</td>
+                                <td>TX12347</td>
+                                <td>2024-12-31</td>
+                                <td>Konser C</td>
                                 <td>Roni Saputra</td>
-                                <td>roni.saputra@example.com</td>
-                                <td>Pembeli</td>
+                                <td>1</td>
+                                <td>Rp 100,000</td>
+                                <td><img src="qrcode3.png" alt="QR Code"></td>
                                 <td>
                                     <button class="btn edit">Edit</button>
                                     <button class="btn delete">Hapus</button>
@@ -94,7 +110,7 @@
                         </tbody>
                     </table>
                 </div>
-            </section>
+            </section>            
         </main>
     </div>
 
