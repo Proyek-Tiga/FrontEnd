@@ -1,0 +1,319 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: 'Crimson Pro', serif; /* Menggunakan font Crimson Pro */
+    background-color: #f8f9fd;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh; /* Pastikan latar penuh */
+    background-color: #17a2b8; /* Latar belakang sidebar */
+    padding: 0px; /* Tambahkan padding untuk latar */
+    box-sizing: border-box; /* Untuk memastikan padding dihitung dalam dimensi */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 150px;
+    background-color: transparent; /* Membiarkan warna dasar */
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Jarak antar elemen di sidebar */
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.sidebar .logo {
+    display: flex;
+    flex-direction: column; /* Ubah arah fleksibel menjadi kolom */
+    align-items: center; /* Pusatkan ikon dan teks */
+    gap: 8px; /* Jarak antara ikon dan teks */
+    margin-bottom: 20px;
+    color: white;
+}
+
+.sidebar .logo i {
+    font-size: 50px; /* Ukuran ikon lebih besar */
+    color: #ffdd57; /* Warna emas */
+}
+
+.sidebar .logo h2 {
+    font-family: 'Chewy', cursive; /* Menambahkan font Chewy */
+    margin: 0;
+    text-align: center; /* Teks di tengah */
+    color: white; /* Warna teks */
+}
+
+/* Menu Items */
+.sidebar .menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Jarak antar item menu */
+}
+
+.sidebar .menu-item {
+    display: flex;
+    align-items: center; /* Ikon dan teks sejajar secara vertikal */
+    padding: 10px;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px; /* Sudut membulat */
+    transition: background-color 0.3s ease;
+    gap: 10px; /* Jarak antara ikon dan teks */
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.sidebar .menu-item i {
+    font-size: 16px;
+}
+
+.sidebar .menu-item:hover {
+    background-color: #00b7ff; /* Warna saat hover */
+}
+
+.sidebar .menu-item.active {
+    background-color: white; /* Warna aktif */
+    color: #11698e;
+    font-weight: bold;
+    border-radius: 20px 0 0 20px; /* Gaya rounded hanya untuk sisi kiri */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Tambahkan bayangan */
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 20px; /* Tambahkan jarak dari sidebar */
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+    margin: 20px; /* Memberikan ruang ke sekeliling untuk latar */
+    overflow-y: auto;
+}
+
+.main-content header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header Container */
+.custom-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Search Container */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fd;
+    padding: 8px 15px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.search-container .search-input {
+    border: none;
+    outline: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    flex: 1;
+    background: transparent;
+    color: #333;
+}
+
+.search-container .search-icon,
+.search-container .voice-icon {
+    color: #aaa;
+    font-size: 16px;
+    margin: 0 5px;
+}
+
+/* User Container */
+.user-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 600;
+}
+
+.user-container .user-icon {
+    font-size: 20px;
+    color: #333;
+}
+
+/* Container */
+.table-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 1000px;
+}
+
+/* Title */
+.table-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Table Styling */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: left;
+}
+
+.data-table thead th {
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 12px;
+    border-bottom: 2px solid #ddd;
+    text-transform: uppercase;
+}
+
+.data-table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    color: #555;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Action Buttons */
+.btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    text-align: center;
+    margin: 2px; /* Jarak antar tombol */
+    width: 80px; /* Lebar seragam */
+}
+
+.btn.edit {
+    background-color: #4CAF50; /* Warna hijau untuk tombol edit */
+    color: white;
+}
+
+.btn.delete {
+    background-color: #f44336; /* Warna merah untuk tombol hapus */
+    color: white;
+}
+
+.btn.add {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px; /* Padding lebih kecil */
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    white-space: nowrap; /* Mencegah teks menjadi ke bawah */
+    width: auto; /* Mengatur lebar sesuai isi teks */
+    max-width: 150px; /* Membatasi panjang maksimum */
+}
+
+.btn.add:hover {
+    background-color: #0056b3;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Popup Tambah dan Edit Konser */
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Latar belakang gelap transparan */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-content {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Bayangan lembut */
+    text-align: left;
+    position: relative;
+}
+
+.popup-content h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center; /* Memusatkan judul */
+}
+
+.popup-content form label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #555;
+    font-weight: 500;
+}
+
+.popup-content form input,
+.popup-content form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.popup-content form input:focus,
+.popup-content form select:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.popup-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
