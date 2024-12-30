@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="pembeli.css">
+
+    <!-- Font Chewy -->
+    <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
+    <!-- Font Crimson Pro -->
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-guitar"></i>
+                <h2>AuSa Beats</h2>
+            </div>
+            <nav class="menu">
+                <a href="#" class="menu-item"><i class="fas fa-home"></i> Beranda</a>
+                <a href="#" class="menu-item"><i class="fas fa-music"></i> Konser</a>
+                <a href="#" class="menu-item active"><i class="fas fa-users"></i> Pembeli</a>
+                <a href="#" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="custom-header">
+                <div class="search-container">
+                    <i class="fa fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <i class="fa fa-microphone voice-icon"></i>
+                </div>
+                <div class="user-container">
+                    <i class="fa fa-user user-icon"></i>
+                    <span>Nama Pengguna</span>
+                </div>
+            </header>
+
+            <section class="content">
+                <!-- Table Section -->
+                <div class="table-container">
+                    <h2>Data Pembeli</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Ahmad Taufik</td>
+                                <td>ahmad.taufik@example.com</td>
+                                <td>Pembeli</td>
+                                <td>
+                                    <button class="btn edit">Edit</button>
+                                    <button class="btn delete">Hapus</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Siti Aisyah</td>
+                                <td>siti.aisyah@example.com</td>
+                                <td>Pembeli</td>
+                                <td>
+                                    <button class="btn edit">Edit</button>
+                                    <button class="btn delete">Hapus</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Roni Saputra</td>
+                                <td>roni.saputra@example.com</td>
+                                <td>Pembeli</td>
+                                <td>
+                                    <button class="btn edit">Edit</button>
+                                    <button class="btn delete">Hapus</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+
+</html>
