@@ -48,7 +48,6 @@
                 <!-- Table Section -->
                 <div class="table-container">
                     <h2>Data Konser</h2>
-                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Konser</button>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -64,115 +63,45 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Contoh Data Konser -->
                             <tr>
                                 <td>1</td>
-                                <td>2024-12-30</td>
-                                <td>Konser Malam Tahun Baru</td>
+                                <td>2024-12-01</td>
+                                <td>Konser Musik 1</td>
                                 <td>Stadion Utama Gelora Bung Karno</td>
                                 <td>75,000</td>
-                                <td>1,500,000</td>
-                                <td>PT. Musik Sejati</td>
-                                <td>Setuju</td>
+                                <td>Rp 200,000</td>
+                                <td>AuSa Beats</td>
+                                <td>Belum Di-Acc</td>
                                 <td>
                                     <button class="btn edit">Edit</button>
                                     <button class="btn delete">Hapus</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>2025-01-15</td>
-                                <td>Konser Rock Legends</td>
-                                <td>Lapangan Merdeka</td>
-                                <td>10,000</td>
-                                <td>200,000</td>
-                                <td>Event Organizer</td>
-                                <td>Tidak Setuju</td>
-                                <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
-                                </td>
-                            </tr>
-                            <!-- Data Konser Akan Ditambahkan di Sini oleh JavaScript -->
+                            <!-- Add more rows as needed -->
                         </tbody>
                     </table>
                 </div>
             </section>
-
-            <!-- Popup Form Tambah Konser -->
-            <div class="popup" id="popupTambahKonser">
-                <div class="popup-content">
-                    <h3>Tambah Konser</h3>
-                    <form id="formTambahKonser">
-                        <label for="tanggal">Tanggal:</label>
-                        <input type="date" id="tanggal" name="tanggal" required>
-
-                        <label for="namaKonser">Nama Konser:</label>
-                        <input type="text" id="namaKonser" name="namaKonser" placeholder="Masukkan nama konser" required>
-
-                        <label for="lokasi">Lokasi:</label>
-                        <input type="text" id="lokasi" name="lokasi" placeholder="Masukkan lokasi konser" required>
-
-                        <label for="jumlahTiket">Jumlah Tiket:</label>
-                        <input type="number" id="jumlahTiket" name="jumlahTiket" placeholder="Masukkan jumlah tiket" required>
-
-                        <label for="harga">Harga:</label>
-                        <input type="number" id="harga" name="harga" placeholder="Masukkan harga tiket" required>
-
-                        <label for="penyelenggara">Nama Penyelenggara:</label>
-                        <input type="text" id="penyelenggara" name="penyelenggara" placeholder="Masukkan nama penyelenggara" required>
-
-                        <label for="status">Status:</label>
-                        <select id="status" name="status" required>
-                            <option value="Setuju">Setuju</option>
-                            <option value="Tidak Setuju">Tidak Setuju</option>
-                        </select>
-
-                        <div class="popup-actions">
-                            <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                            <button type="button" class="btn cancel" id="btnBatalTambah" aria-label="Batal">Batal</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Popup Form Edit Konser -->
-            <div class="popup" id="popupEditKonser">
-                <div class="popup-content">
-                    <h3>Edit Konser</h3>
-                    <form id="formEditKonser">
-                        <label for="editTanggal">Tanggal:</label>
-                        <input type="date" id="editTanggal" name="editTanggal" required>
-
-                        <label for="editNamaKonser">Nama Konser:</label>
-                        <input type="text" id="editNamaKonser" name="editNamaKonser" placeholder="Masukkan nama konser" required>
-
-                        <label for="editLokasi">Lokasi:</label>
-                        <input type="text" id="editLokasi" name="editLokasi" placeholder="Masukkan lokasi konser" required>
-
-                        <label for="editJumlahTiket">Jumlah Tiket:</label>
-                        <input type="number" id="editJumlahTiket" name="editJumlahTiket" placeholder="Masukkan jumlah tiket" required>
-
-                        <label for="editHarga">Harga:</label>
-                        <input type="number" id="editHarga" name="editHarga" placeholder="Masukkan harga tiket" required>
-
-                        <label for="editPenyelenggara">Nama Penyelenggara:</label>
-                        <input type="text" id="editPenyelenggara" name="editPenyelenggara" placeholder="Masukkan nama penyelenggara" required>
-
-                        <label for="editStatus">Status:</label>
-                        <select id="editStatus" name="editStatus" required>
-                            <option value="Setuju">Setuju</option>
-                            <option value="Tidak Setuju">Tidak Setuju</option>
-                        </select>
-
-                        <div class="popup-actions">
-                            <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                            <button type="button" class="btn cancel" id="btnBatalEdit" aria-label="Batal">Batal</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </main>
+    </div>
+
+    <!-- Popup Form Edit Status Konser -->
+    <div class="popup" id="popupEditKonser" style="display: none;">
+        <div class="popup-content">
+            <h3>Edit Status Konser</h3>
+            <form id="formEditKonser">
+                <label for="status">Status:</label>
+                <select id="status" name="status">
+                    <option value="Setuju">Setuju</option>
+                    <option value="Tidak Setuju">Tidak Setuju</option>
+                </select>
+                
+                <div class="popup-actions">
+                    <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
+                    <button type="button" class="btn cancel" id="btnBatalEdit" aria-label="Batal">Batal</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Link to external JS file -->

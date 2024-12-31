@@ -1,36 +1,27 @@
 // Referensi elemen
-const btnTambahKonser = document.getElementById('btnTambahKonser');
-const popupTambahKonser = document.getElementById('popupTambahKonser');
-const btnBatalTambah = document.getElementById('btnBatalTambah');
-const formTambahKonser = document.getElementById('formTambahKonser');
 const tabelBody = document.querySelector('.data-table tbody');
 
-// Fungsi untuk menyimpan data ke Local Storage
-const saveToLocalStorage = (data) => {
-    localStorage.setItem('konserData', JSON.stringify(data));
-};
+// Menambahkan data konser (misalnya data sudah tersedia sebelumnya)
+const konserData = [
+    { id: 1, tanggal: '2024-12-25', namaKonser: 'Konser A', lokasi: 'Lokasi A', jumlahTiket: 500, harga: 150000, penyelenggara: 'Penyelenggara A', status: 'Belum Di-Acc' },
+    { id: 2, tanggal: '2024-12-26', namaKonser: 'Konser B', lokasi: 'Lokasi B', jumlahTiket: 600, harga: 200000, penyelenggara: 'Penyelenggara B', status: 'Belum Di-Acc' },
+    // Tambahkan data konser lainnya sesuai kebutuhan
+];
 
-// Fungsi untuk mengambil data dari Local Storage
-const loadFromLocalStorage = () => {
-    const data = localStorage.getItem('konserData');
-    return data ? JSON.parse(data) : [];
-};
-
-// Fungsi untuk merender data ke tabel
-const renderTable = () => {
-    const data = loadFromLocalStorage();
-    tabelBody.innerHTML = '';
-    data.forEach((item, index) => {
+// Menampilkan data konser di tabel
+function tampilkanDataKonser() {
+    tabelBody.innerHTML = ''; // Menghapus tabel sebelumnya
+    konserData.forEach((konser, index) => {
         const row = `
             <tr>
                 <td>${index + 1}</td>
-                <td>${item.tanggal}</td>
-                <td>${item.namaKonser}</td>
-                <td>${item.lokasi}</td>
-                <td>${item.jumlahTiket}</td>
-                <td>${item.harga}</td>
-                <td>${item.penyelenggara}</td>
-                <td>${item.status}</td>
+                <td>${konser.tanggal}</td>
+                <td>${konser.namaKonser}</td>
+                <td>${konser.lokasi}</td>
+                <td>${konser.jumlahTiket}</td>
+                <td>${konser.harga}</td>
+                <td>${konser.penyelenggara}</td>
+                <td>${konser.status}</td>
                 <td>
                     <button class="btn edit">Edit</button>
                     <button class="btn delete">Hapus</button>
@@ -39,58 +30,22 @@ const renderTable = () => {
         `;
         tabelBody.insertAdjacentHTML('beforeend', row);
     });
-};
+}
 
-// Event untuk menampilkan popup tambah konser
-btnTambahKonser.addEventListener('click', () => {
-    popupTambahKonser.style.display = 'flex';
-});
-
-// Event untuk menutup popup tambah konser
-btnBatalTambah.addEventListener('click', () => {
-    popupTambahKonser.style.display = 'none';
-});
-
-// Event untuk form submit (menambah data konser ke tabel)
-formTambahKonser.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const tanggal = document.getElementById('tanggal').value;
-    const namaKonser = document.getElementById('namaKonser').value;
-    const lokasi = document.getElementById('lokasi').value;
-    const jumlahTiket = document.getElementById('jumlahTiket').value;
-    const harga = document.getElementById('harga').value;
-    const penyelenggara = document.getElementById('penyelenggara').value;
-    const status = document.getElementById('status').value;
-
-    if (!tanggal || !namaKonser || !lokasi || !jumlahTiket || !harga || !penyelenggara || !status) {
-        Swal.fire('Gagal!', 'Semua kolom wajib diisi!', 'error');
-        return;
-    }
-
-    const konserData = loadFromLocalStorage();
-    konserData.push({ tanggal, namaKonser, lokasi, jumlahTiket, harga, penyelenggara, status });
-    saveToLocalStorage(konserData);
-
-    formTambahKonser.reset();
-    popupTambahKonser.style.display = 'none';
-    renderTable();
-
-    Swal.fire('Berhasil!', 'Data konser berhasil ditambahkan.', 'success');
-});
+// Menampilkan data konser saat halaman dimuat
+document.addEventListener('DOMContentLoaded', tampilkanDataKonser);
 
 // Event untuk menghapus atau mengedit data
 tabelBody.addEventListener('click', (event) => {
     const target = event.target;
 
-    const konserData = loadFromLocalStorage();
-
+    // Menghapus data konser
     if (target.classList.contains('delete')) {
         const row = target.closest('tr');
-        const index = row.rowIndex - 1;
+        const lokasi = row.cells[3].textContent;
 
         Swal.fire({
-            title: `Hapus konser "${konserData[index].namaKonser}"?`,
+            title: `Hapus konser di ${lokasi}?`,
             text: 'Data ini akan dihapus secara permanen.',
             icon: 'warning',
             showCancelButton: true,
@@ -100,38 +55,26 @@ tabelBody.addEventListener('click', (event) => {
             cancelButtonText: 'Batal',
         }).then((result) => {
             if (result.isConfirmed) {
-                konserData.splice(index, 1);
-                saveToLocalStorage(konserData);
-                renderTable();
+                const index = Array.from(tabelBody.rows).indexOf(row);
+                konserData.splice(index, 1); // Menghapus data dari array konserData
+                tampilkanDataKonser(); // Menampilkan ulang data konser setelah dihapus
                 Swal.fire('Terhapus!', 'Data konser berhasil dihapus.', 'success');
             }
         });
     }
 
+    // Mengedit status konser
     if (target.classList.contains('edit')) {
         const row = target.closest('tr');
-        const index = row.rowIndex - 1;
-        const konser = konserData[index];
+        const status = row.cells[7].textContent;
 
         Swal.fire({
-            title: 'Edit Data Konser',
+            title: 'Edit Status Konser',
             html: `
-                <label for="swalTanggal">Tanggal:</label>
-                <input type="date" id="swalTanggal" class="swal2-input" value="${konser.tanggal}">
-                <label for="swalNamaKonser">Nama Konser:</label>
-                <input type="text" id="swalNamaKonser" class="swal2-input" value="${konser.namaKonser}">
-                <label for="swalLokasi">Lokasi:</label>
-                <input type="text" id="swalLokasi" class="swal2-input" value="${konser.lokasi}">
-                <label for="swalJumlahTiket">Jumlah Tiket:</label>
-                <input type="number" id="swalJumlahTiket" class="swal2-input" value="${konser.jumlahTiket}">
-                <label for="swalHarga">Harga:</label>
-                <input type="number" id="swalHarga" class="swal2-input" value="${konser.harga}">
-                <label for="swalPenyelenggara">Nama Penyelenggara:</label>
-                <input type="text" id="swalPenyelenggara" class="swal2-input" value="${konser.penyelenggara}">
                 <label for="swalStatus">Status:</label>
-                <select id="swalStatus" class="swal2-select">
-                    <option value="Setuju" ${konser.status === 'Setuju' ? 'selected' : ''}>Setuju</option>
-                    <option value="Tidak Setuju" ${konser.status === 'Tidak Setuju' ? 'selected' : ''}>Tidak Setuju</option>
+                <select id="swalStatus" class="swal2-input">
+                    <option value="Acc" ${status === 'Acc' ? 'selected' : ''}>Acc</option>
+                    <option value="Tidak Acc" ${status === 'Tidak Acc' ? 'selected' : ''}>Tidak Acc</option>
                 </select>
             `,
             focusConfirm: false,
@@ -139,31 +82,19 @@ tabelBody.addEventListener('click', (event) => {
             confirmButtonText: 'Simpan',
             cancelButtonText: 'Batal',
             preConfirm: () => {
-                const newTanggal = document.getElementById('swalTanggal').value;
-                const newNamaKonser = document.getElementById('swalNamaKonser').value;
-                const newLokasi = document.getElementById('swalLokasi').value;
-                const newJumlahTiket = document.getElementById('swalJumlahTiket').value;
-                const newHarga = document.getElementById('swalHarga').value;
-                const newPenyelenggara = document.getElementById('swalPenyelenggara').value;
                 const newStatus = document.getElementById('swalStatus').value;
 
-                if (!newTanggal || !newNamaKonser || !newLokasi || !newJumlahTiket || !newHarga || !newPenyelenggara || !newStatus) {
-                    Swal.showValidationMessage('Semua kolom wajib diisi!');
-                }
-
-                return { newTanggal, newNamaKonser, newLokasi, newJumlahTiket, newHarga, newPenyelenggara, newStatus };
+                return { newStatus };
             },
         }).then((result) => {
             if (result.isConfirmed) {
-                konserData[index] = { ...result.value };
-                saveToLocalStorage(konserData);
-                renderTable();
+                const { newStatus } = result.value;
+                const index = Array.from(tabelBody.rows).indexOf(row);
+                konserData[index].status = newStatus; // Update status pada array data
+                tampilkanDataKonser(); // Menampilkan ulang data konser setelah update status
 
-                Swal.fire('Berhasil!', 'Data konser berhasil diperbarui.', 'success');
+                Swal.fire('Berhasil!', 'Status konser berhasil diperbarui.', 'success');
             }
         });
     }
 });
-
-// Muat data saat halaman pertama kali dimuat
-document.addEventListener('DOMContentLoaded', renderTable);
