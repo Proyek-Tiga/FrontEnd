@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Admin | Ausa Beats Lokasi</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/index.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -24,8 +24,8 @@
                 <h2>AuSa Beats</h2>
             </div>
             <nav class="menu">
-                <a href="index.html" class="menu-item active"><i class="fas fa-home"></i> Beranda</a>
-                <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
+                <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Beranda</a>
+                <a href="lokasi.html" class="menu-item active"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
                 <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
@@ -49,7 +49,7 @@
                 <!-- Table Section -->
                 <div class="table-container">
                     <h2>Data Konser</h2>
-                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Konser</button>
+                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Lokasi</button>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -95,7 +95,7 @@
             <!-- Popup Form Tambah Konser -->
             <div class="popup" id="popupTambahKonser" style="display: none;">
                 <div class="popup-content">
-                    <h3>Tambah Konser</h3>
+                    <h3>Tambah Lokasi</h3>
                     <form id="formTambahKonser">
                         <label for="lokasi">Lokasi:</label>
                         <input type="text" id="lokasi" name="lokasi" placeholder="Masukkan lokasi konser" required>
@@ -115,6 +115,7 @@
 
     <!-- Link to external JS file -->
     <script src="js/index.js"></script>
+    <script src="js/lokasi.js"></script>
 </body>
 
 </html>
