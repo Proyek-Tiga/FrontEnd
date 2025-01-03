@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Admin | Dashboard Ausa Beats</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/index.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -24,7 +24,7 @@
                 <h2>AuSa Beats</h2>
             </div>
             <nav class="menu">
-                <a href="index.html" class="menu-item active"><i class="fas fa-home"></i> Beranda</a>
+                <a href="index.html" class="menu-item active"><i class="fas fa-home"></i> Dasbor</a>
                 <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
@@ -42,53 +42,65 @@
                 <div class="user-container">
                     <i class="fa fa-user user-icon"></i>
                     <span>Nama Pengguna</span>
+                    <div class="dropdown">
+                        <i class="fa fa-caret-down dropdown-icon"></i>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-item">
+                                <i class="fa fa-sign-out"></i>
+                                <span>Keluar</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </header>
+            </header>            
 
-            <section class="content">
-                <!-- Table Section -->
-                <div class="table-container">
-                    <h2>Data Konser</h2>
-                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Konser</button>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Lokasi</th>
-                                <th>Kapasitas Orang</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Stadion Utama Gelora Bung Karno</td>
-                                <td>75,000</td>
-                                <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Lapangan Merdeka</td>
-                                <td>10,000</td>
-                                <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Gedung Serbaguna</td>
-                                <td>1,500</td>
-                                <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <section class="dashboard-cards">
+                <h1>Dashboard Admin</h1>
+                <div class="cards-container">
+                    <!-- Lokasi -->
+                    <div class="card">
+                        <div class="card-icon-container">
+                            <i class="fa-solid fa-location-dot card-icon"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Lokasi</h3>
+                            <p>Jumlah: <strong>10</strong></p>
+                            <a href="lokasi.html" class="btn view-details">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <!-- Konser -->
+                    <div class="card">
+                        <div class="card-icon-container">
+                            <i class="fas fa-music card-icon"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Konser</h3>
+                            <p>Jumlah: <strong>15</strong></p>
+                            <a href="datakonser.html" class="btn view-details">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <!-- Pembeli -->
+                    <div class="card">
+                        <div class="card-icon-container">
+                            <i class="fas fa-users card-icon"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Pembeli</h3>
+                            <p>Total: <strong>1,250</strong></p>
+                            <a href="pembeli.html" class="btn view-details">Lihat Detail</a>
+                        </div>
+                    </div>
+                    <!-- Transaksi -->
+                    <div class="card">
+                        <div class="card-icon-container">
+                            <i class="fas fa-receipt card-icon"></i>
+                        </div>
+                        <div class="card-info">
+                            <h3>Transaksi</h3>
+                            <p>Total: <strong>Rp. 125,000,000</strong></p>
+                            <a href="transaksi.html" class="btn view-details">Lihat Detail</a>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -105,7 +117,8 @@
 
                         <div class="popup-actions">
                             <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                            <button type="button" class="btn cancel" id="btnBatalTambah" aria-label="Batal">Batal</button>
+                            <button type="button" class="btn cancel" id="btnBatalTambah"
+                                aria-label="Batal">Batal</button>
                         </div>
                     </form>
                 </div>
