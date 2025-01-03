@@ -145,15 +145,86 @@ body {
 .user-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     font-size: 14px;
     color: #333;
     font-weight: 600;
+    position: relative;
+    cursor: pointer;
+}
+
+.user-container:hover {
+    color: #007bff; /* Warna biru saat hover */
 }
 
 .user-container .user-icon {
     font-size: 20px;
     color: #333;
+}
+
+.user-container:hover .user-icon {
+    color: #007bff; /* Ikon berubah warna jadi biru */
+}
+
+.user-container .dropdown {
+    position: relative;
+}
+
+.dropdown-icon {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.user-container:hover .dropdown-icon {
+    color: #007bff; /* Ikon dropdown berubah jadi biru */
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    list-style: none;
+    padding: 5px 0;
+    margin: 5px 0;
+    min-width: 150px;
+    z-index: 10;
+}
+
+.dropdown-menu.active {
+    display: block; /* Tampilkan dropdown saat class active ditambahkan */
+}
+
+.dropdown-menu .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.dropdown-menu .dropdown-item i {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #007bff;
+    color: #000;
+}
+
+.dropdown-menu .dropdown-item:hover i {
+    color: #000; /* Ikon juga berubah jadi putih */
+}
+
+/* Tampilkan Dropdown saat Hover */
+.user-container:hover .dropdown-menu {
+    display: block;
 }
 
 /* Container */

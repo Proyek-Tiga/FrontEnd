@@ -172,7 +172,7 @@ body {
 .user-container {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     font-size: 14px;
     color: #333;
     font-weight: 600;
@@ -180,21 +180,31 @@ body {
     cursor: pointer;
 }
 
+.user-container:hover {
+    color: #007bff; /* Warna biru saat hover */
+}
+
 .user-container .user-icon {
     font-size: 20px;
     color: #333;
 }
 
+.user-container:hover .user-icon {
+    color: #007bff; /* Ikon berubah warna jadi biru */
+}
+
 .user-container .dropdown {
     position: relative;
-    display: inline-block;
 }
 
 .dropdown-icon {
-    margin-left: 5px;
     font-size: 14px;
     color: #333;
     cursor: pointer;
+}
+
+.user-container:hover .dropdown-icon {
+    color: #007bff; /* Ikon dropdown berubah jadi biru */
 }
 
 .dropdown-menu {
@@ -206,35 +216,44 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     list-style: none;
-    padding: 10px 0;
+    padding: 5px 0;
     margin: 5px 0;
     min-width: 150px;
     z-index: 10;
 }
 
+.dropdown-menu.active {
+    display: block; /* Tampilkan dropdown saat class active ditambahkan */
+}
+
 .dropdown-menu .dropdown-item {
     display: flex;
     align-items: center;
-    padding: 10px 15px;
+    padding: 8px 15px;
     color: #333;
     font-size: 14px;
     text-decoration: none;
-    transition: background-color 0.2s ease;
 }
 
 .dropdown-menu .dropdown-item i {
-    margin-right: 10px;
+    margin-right: 8px;
     font-size: 16px;
 }
 
 .dropdown-menu .dropdown-item:hover {
-    background-color: #f8f9fd;
+    background-color: #007bff;
+    color: #000;
 }
 
-/* Show Dropdown on Hover */
+.dropdown-menu .dropdown-item:hover i {
+    color: #000; /* Ikon juga berubah jadi putih */
+}
+
+/* Tampilkan Dropdown saat Hover */
 .user-container:hover .dropdown-menu {
     display: block;
 }
+
 
 /* Container */
 .table-container {
@@ -268,7 +287,10 @@ body {
     padding: 12px;
     border-bottom: 2px solid #ddd;
     text-transform: uppercase;
+    text-align: center; /* Mengatur teks menjadi rata tengah secara horizontal */
+    vertical-align: middle; /* Mengatur teks menjadi rata tengah secara vertikal */
 }
+
 
 .data-table tbody td {
     padding: 12px;
