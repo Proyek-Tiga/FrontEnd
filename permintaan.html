@@ -58,43 +58,55 @@
             <section class="content">
                 <!-- Table Section -->
                 <div class="table-container">
-                    <h2>Data Lokasi</h2>
-                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Lokasi</button>
+                    <h2>Data Permintaan Lokasi</h2>
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Lokasi</th>
                                 <th>Kapasitas Orang</th>
+                                <th>Pilihan Tiket</th>
+                                <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <tr id="row-1">
                                 <td>1</td>
-                                <td>Stadion Utama Gelora Bung Karno</td>
-                                <td>75,000</td>
+                                <td>Auditorium ULBI</td>
+                                <td>500</td>
                                 <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
+                                    <ul>
+                                        <li>VIP - Rp 200,000</li>
+                                        <li>Reguler - Rp 100,000</li>
+                                    </ul>
+                                </td>
+                                <td id="status-1">Ditunda</td>
+                                <td>
+                                    <select onchange="updateStatus(1, this.value)">
+                                        <option value="Ditunda" selected>Ditunda</option>
+                                        <option value="Disetujui">Disetujui</option>
+                                        <option value="Ditolak">Ditolak</option>
+                                    </select>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr id="row-2">
                                 <td>2</td>
-                                <td>Lapangan Merdeka</td>
-                                <td>10,000</td>
+                                <td>Balai Kota</td>
+                                <td>1,000</td>
                                 <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
+                                    <ul>
+                                        <li>VIP - Rp 300,000</li>
+                                        <li>Reguler - Rp 150,000</li>
+                                    </ul>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Gedung Serbaguna</td>
-                                <td>1,500</td>
+                                <td id="status-2">Ditunda</td>
                                 <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
+                                    <select onchange="updateStatus(2, this.value)">
+                                        <option value="Ditunda" selected>Ditunda</option>
+                                        <option value="Disetujui">Disetujui</option>
+                                        <option value="Ditolak">Ditolak</option>
+                                    </select>
                                 </td>
                             </tr>
                         </tbody>
@@ -102,30 +114,12 @@
                 </div>
             </section>
 
-            <!-- Popup Form Tambah Konser -->
-            <div class="popup" id="popupTambahKonser" style="display: none;">
-                <div class="popup-content">
-                    <h3>Tambah Lokasi</h3>
-                    <form id="formTambahKonser">
-                        <label for="lokasi">Lokasi:</label>
-                        <input type="text" id="lokasi" name="lokasi" placeholder="Masukkan lokasi konser" required>
-
-                        <label for="kapasitas">Kapasitas Orang:</label>
-                        <input type="number" id="kapasitas" name="kapasitas" placeholder="Masukkan kapasitas" required>
-
-                        <div class="popup-actions">
-                            <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                            <button type="button" class="btn cancel" id="btnBatalTambah" aria-label="Batal">Batal</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </main>
     </div>
 
     <!-- Link to external JS file -->
     <!-- <script src="js/index.js"></script> -->
-    <script src="js/lokasi.js"></script>
+    <script src="js/permintaan.js"></script>
 </body>
 
 </html>
