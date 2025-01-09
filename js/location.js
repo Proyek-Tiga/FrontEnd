@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const url = 'https://tiket-backend-theta.vercel.app/api/lokasi';
+    const token = localStorage.getItem('token'); // Pastikan token sudah tersimpan
     const tabelBody = document.querySelector('.data-table tbody');
     const btnTambahKonser = document.getElementById('btnTambahKonser');
     const popupTambahKonser = document.getElementById('popupTambahKonser');
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 
@@ -74,6 +76,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Gunakan header Authorization
                 },
                 body: JSON.stringify({
                     lokasi: lokasi,
@@ -82,20 +85,24 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if (!response.ok) {
-                throw new Error('Gagal menambahkan data ke server');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Gagal menambahkan data ke server');
             }
 
-            const newData = await response.json();
             alert('Lokasi berhasil ditambahkan!');
             popupTambahKonser.style.display = 'none'; // Sembunyikan pop-up
             formTambahKonser.reset(); // Reset form input
             await fetchData(); // Render ulang tabel
         } catch (error) {
             console.error('Error:', error);
-            alert('Terjadi kesalahan saat menambahkan lokasi!');
+            alert(`Terjadi kesalahan: ${error.message}`);
         }
     });
 
     // Initial fetch data
-    await fetchData();
+    if (token) {
+        await fetchData();
+    } else {
+        alert('Token tidak ditemukan. Pastikan Anda sudah login.');
+    }
 });
