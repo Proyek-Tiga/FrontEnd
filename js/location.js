@@ -10,6 +10,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const popupTambahKonser = document.getElementById('popupTambahKonser');
     const btnBatalTambah = document.getElementById('btnBatalTambah');
     const formTambahKonser = document.getElementById('formTambahKonser');
+    const popupHapusKonser = document.getElementById('popupHapusKonser');
+    const btnKonfirmasiHapus = document.getElementById('btnKonfirmasiHapus');
+    const btnBatalHapus = document.getElementById('btnBatalHapus');
+
+    let lokasiIdTerpilih = null;
 
     // Function untuk render tabel
     const renderTable = (data) => {
@@ -96,6 +101,47 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Lokasi berhasil ditambahkan!');
             popupTambahKonser.style.display = 'none'; // Sembunyikan pop-up
             formTambahKonser.reset(); // Reset form input
+            await fetchData(); // Render ulang tabel
+        } catch (error) {
+            console.error('Error:', error);
+            alert(`Terjadi kesalahan: ${error.message}`);
+        }
+    });
+
+    // Event Listener: Tampilkan pop-up konfirmasi hapus
+    tabelBody.addEventListener('click', (e) => {
+        if (e.target.closest('.delete')) {
+            lokasiIdTerpilih = e.target.closest('.delete').dataset.id;
+            popupHapusKonser.style.display = 'block';
+        }
+    });
+
+    // Event Listener: Batal hapus
+    btnBatalHapus.addEventListener('click', () => {
+        popupHapusKonser.style.display = 'none';
+        lokasiIdTerpilih = null;
+    });
+
+    // Event Listener: Konfirmasi hapus
+    btnKonfirmasiHapus.addEventListener('click', async () => {
+        if (!lokasiIdTerpilih) return;
+
+        try {
+            const response = await fetch(`${url}/${lokasiIdTerpilih}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Gagal menghapus data');
+            }
+
+            alert('Data berhasil dihapus!');
+            popupHapusKonser.style.display = 'none';
+            lokasiIdTerpilih = null;
             await fetchData(); // Render ulang tabel
         } catch (error) {
             console.error('Error:', error);
