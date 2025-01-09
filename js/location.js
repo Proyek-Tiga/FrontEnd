@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     const popupHapusKonser = document.getElementById('popupHapusKonser');
     const btnKonfirmasiHapus = document.getElementById('btnKonfirmasiHapus');
     const btnBatalHapus = document.getElementById('btnBatalHapus');
+    const popupEditKonser = document.getElementById('popupEditKonser');
+    const formEditKonser = document.getElementById('formEditKonser');
+    const btnBatalEdit = document.getElementById('btnBatalEdit');
+    const editLokasi = document.getElementById('editLokasi');
+    const editKapasitas = document.getElementById('editKapasitas');
 
     let lokasiIdTerpilih = null;
 
@@ -101,6 +106,78 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Lokasi berhasil ditambahkan!');
             popupTambahKonser.style.display = 'none'; // Sembunyikan pop-up
             formTambahKonser.reset(); // Reset form input
+            await fetchData(); // Render ulang tabel
+        } catch (error) {
+            console.error('Error:', error);
+            alert(`Terjadi kesalahan: ${error.message}`);
+        }
+    });
+
+    // Event Listener: Tampilkan pop-up edit dan isi form dengan data yang akan diedit
+    tabelBody.addEventListener('click', async (e) => {
+        if (e.target.closest('.edit')) {
+            lokasiIdTerpilih = e.target.closest('.edit').dataset.id;
+
+            try {
+                const response = await fetch(`${url}/${lokasiIdTerpilih}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Gagal mengambil data lokasi');
+                }
+
+                const data = await response.json();
+                editLokasi.value = data.lokasi || '';
+                editKapasitas.value = data.tiket || 0;
+
+                popupEditKonser.style.display = 'block'; // Tampilkan pop-up
+            } catch (error) {
+                console.error('Error:', error);
+                alert(`Terjadi kesalahan: ${error.message}`);
+            }
+        }
+    });
+
+    // Event Listener: Batal edit
+    btnBatalEdit.addEventListener('click', () => {
+        popupEditKonser.style.display = 'none';
+        formEditKonser.reset();
+        lokasiIdTerpilih = null;
+    });
+
+    // Event Listener: Simpan perubahan
+    formEditKonser.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const updatedLokasi = editLokasi.value;
+        const updatedKapasitas = parseInt(editKapasitas.value, 10);
+
+        try {
+            const response = await fetch(`${url}/${lokasiIdTerpilih}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                    lokasi: updatedLokasi,
+                    tiket: updatedKapasitas,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Gagal mengubah data lokasi');
+            }
+
+            alert('Data berhasil diperbarui!');
+            popupEditKonser.style.display = 'none';
+            formEditKonser.reset();
+            lokasiIdTerpilih = null;
             await fetchData(); // Render ulang tabel
         } catch (error) {
             console.error('Error:', error);
