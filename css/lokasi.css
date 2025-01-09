@@ -350,7 +350,22 @@ body {
 
 /* Popup Tambah Konser */
 .popup {
-    display: none; /* Default popup disembunyikan */
+    display: flex !important; /* Default popup disembunyikan */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Latar belakang gelap transparan */
+    display: flex; /* Flexbox untuk pemusatan */
+    justify-content: center; /* Horizontal centering */
+    align-items: center; /* Vertical centering */
+    z-index: 1000;
+}
+
+/* Popup Tambah Konser */
+.popup1 {
+    display: flex !important; /* Default popup disembunyikan */
     position: fixed;
     top: 0;
     left: 0;
