@@ -5,6 +5,13 @@ const btnBatalTambah = document.getElementById('btnBatalTambah');
 const formTambahKonser = document.getElementById('formTambahKonser');
 const tabelBody = document.querySelector('.data-table tbody');
 
+const token = localStorage.getItem("authToken");
+if (token) {
+    console.log("Token ditemukan:", token);
+} else {
+    console.log("Token tidak ditemukan. Harap login ulang.");
+}
+
 // Event untuk menampilkan popup tambah konser
 btnTambahKonser.addEventListener('click', () => {
     popupTambahKonser.style.display = 'flex';
@@ -113,3 +120,10 @@ tabelBody.addEventListener('click', (event) => {
         });
     }
 });
+
+function logout() {
+    localStorage.removeItem("authToken");
+    alert("Anda telah logout.");
+    window.location.href = "index.html"; // Kembali ke halaman login
+}
+
