@@ -350,7 +350,7 @@ body {
 
 /* Popup Tambah Konser */
 .popup {
-    display: none;
+    display: flex !important;
     position: fixed;
     top: 0;
     left: 0;
