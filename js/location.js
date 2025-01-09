@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+        alert('Token tidak ditemukan. Harap login ulang.');
+        return; // Hentikan eksekusi jika token tidak ditemukan
+    }
     const url = 'https://tiket-backend-theta.vercel.app/api/lokasi';
-    const token = localStorage.getItem('token'); // Pastikan token sudah tersimpan
     const tabelBody = document.querySelector('.data-table tbody');
     const btnTambahKonser = document.getElementById('btnTambahKonser');
     const popupTambahKonser = document.getElementById('popupTambahKonser');
@@ -100,9 +104,5 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Initial fetch data
-    if (token) {
-        await fetchData();
-    } else {
-        alert('Token tidak ditemukan. Pastikan Anda sudah login.');
-    }
+    await fetchData();
 });
