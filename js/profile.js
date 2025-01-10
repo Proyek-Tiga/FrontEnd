@@ -53,18 +53,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 title: 'Berhasil!',
                 text: 'Anda telah logout.',
             }).then(() => {
-                // Tampilkan pesan "Anda harus login terlebih dahulu"
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Informasi',
-                    text: 'Anda harus login terlebih dahulu.',
-                }).then(() => {
-                    // Cek apakah ada halaman sebelumnya
-                    const previousPage = document.referrer || "https://proyek-tiga.github.io/FrontendAdmin/index.html"; // Jika tidak ada halaman sebelumnya, arahkan ke halaman yang diinginkan
+                // Cek apakah ada halaman sebelumnya
+                const previousPage = document.referrer || "https://proyek-tiga.github.io/FrontendAdmin/index.html"; // Jika tidak ada halaman sebelumnya, arahkan ke halaman yang diinginkan
 
-                    console.log("Pengguna diarahkan kembali ke:", previousPage);
-                    window.location.href = previousPage; // Arahkan ke halaman sebelumnya atau halaman yang diinginkan
-                });
+                console.log("Pengguna diarahkan kembali ke:", previousPage);
+                window.location.href = previousPage; // Arahkan ke halaman sebelumnya atau halaman yang diinginkan
             });
         });
     }
