@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.location.href = "index.html";
     } else {
         // Ambil data profil pengguna menggunakan token
-        fetch("http://localhost:5000/api/profile", {
+        fetch("https://tiket-backend-theta.vercel.app/api/profile", {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}` // Sertakan token dalam header untuk autentikasi
