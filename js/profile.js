@@ -53,9 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 title: 'Berhasil!',
                 text: 'Anda telah logout.',
             }).then(() => {
-                // Redirect ke halaman login
-                console.log("Pengguna diarahkan ke halaman login.");
-                window.location.href = "index.html";
+                // Redirect ke halaman yang diinginkan
+                console.log("Pengguna diarahkan ke https://proyek-tiga.github.io/");
+                window.location.href = "https://proyek-tiga.github.io/"; // Arahkan ke URL yang diinginkan
             });
         });
     }
