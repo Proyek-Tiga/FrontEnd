@@ -1,10 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const token = localStorage.getItem("authToken"); // Mengambil token dari localStorage
+    // Mengambil token dari localStorage
+    const token = localStorage.getItem("authToken");
+
+    console.log("Token yang ditemukan:", token);  // Menampilkan token di console
 
     if (!token) {
         // Jika token tidak ditemukan, alihkan pengguna ke halaman login
+        console.log("Token tidak ditemukan, mengalihkan ke halaman login...");
         window.location.href = "index.html";
     } else {
+        console.log("Token ditemukan, mencoba mengambil data profil...");
+
         // Ambil data profil pengguna menggunakan token
         fetch("https://tiket-backend-theta.vercel.app/api/profile", {
             method: "GET",
@@ -12,17 +18,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 "Authorization": `Bearer ${token}` // Sertakan token dalam header untuk autentikasi
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log("Respons dari server:", response);  // Menampilkan respons server di console
+            return response.json();
+        })
         .then(data => {
+            console.log("Data profil pengguna:", data);  // Menampilkan data profil pengguna
+
             // Jika berhasil, tampilkan nama pengguna
             if (data && data.name) {
                 document.getElementById("username-display").textContent = data.name;
+                console.log("Nama pengguna ditampilkan:", data.name);  // Menampilkan nama yang di-set
             } else {
                 console.error("Nama pengguna tidak ditemukan di data respons.");
             }
         })
         .catch(error => {
-            console.error("Error saat mengambil data pengguna:", error);
+            console.error("Error saat mengambil data pengguna:", error);  // Menampilkan error jika ada
         });
     }
 
@@ -30,13 +42,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const logoutButton = document.getElementById("logout");
     if (logoutButton) {
         logoutButton.addEventListener("click", function () {
-            localStorage.removeItem("authToken");  // Hapus token dari localStorage
+            console.log("Proses logout dimulai...");
+
+            // Hapus token dari localStorage
+            localStorage.removeItem("authToken");
+
+            // Tampilkan notifikasi logout menggunakan SweetAlert
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
                 text: 'Anda telah logout.',
             }).then(() => {
-                window.location.href = "index.html";  // Redirect ke halaman login
+                // Redirect ke halaman login
+                console.log("Pengguna diarahkan ke halaman login.");
+                window.location.href = "index.html";
             });
         });
     }
