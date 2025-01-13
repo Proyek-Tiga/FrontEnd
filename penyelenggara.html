@@ -30,7 +30,8 @@
                 <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
-                <a href="penyelenggara.html" class="menu-item active"><i class="fa-solid fa-users-rectangle"></i></i> Penyelenggara</a>
+                <a href="penyelenggara.html" class="menu-item active"><i class="fa-solid fa-users-rectangle"></i></i>
+                    Penyelenggara</a>
                 <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
             </nav>
         </aside>
@@ -54,7 +55,7 @@
                             </li>
                         </ul>
                     </div>
-                </div> 
+                </div>
             </header>
             <!-- SAMPAII SINI YAAA -->
 
@@ -63,6 +64,10 @@
                 <!-- Table Section -->
                 <div class="table-container">
                     <h2>Data Penyelenggara</h2>
+                    <!-- Tombol Tambah Penyelenggara -->
+                    <button id="add-button" class="btn tambah">
+                        <i class="fas fa-plus"></i> Tambah Penyelenggara
+                    </button>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -73,33 +78,59 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td>1</td>
                                 <td>Ahmad Taufik</td>
                                 <td>ahmad.taufik@example.com</td>
                                 <td>
                                     <button class="btn detail" data-id="1"><i class="fas fa-info-circle"></i></button>
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td>2</td>
                                 <td>Siti Aisyah</td>
                                 <td>siti.aisyah@example.com</td>
                                 <td>
                                     <button class="btn detail" data-id="2"><i class="fas fa-info-circle"></i></button>
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td>3</td>
                                 <td>Roni Saputra</td>
                                 <td>roni.saputra@example.com</td>
                                 <td>
                                     <button class="btn detail" data-id="3"><i class="fas fa-info-circle"></i></button>
                                 </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
+
+                <div class="popup" id="add-popup" style="display: none;">
+                    <div class="popup-content">
+                        <span class="close-btn add-close-btn">&times;</span>
+                        <h3>Tambah Penyelenggara</h3>
+                        <form id="add-form">
+                            <div class="popup-detail-item">
+                                <label for="add-name">Nama:</label>
+                                <input type="text" id="add-name" required>
+                            </div>
+                            <div class="popup-detail-item">
+                                <label for="add-email">Email:</label>
+                                <input type="email" id="add-email" required>
+                            </div>
+                            <div class="popup-detail-item">
+                                <label for="add-password">Password:</label>
+                                <input type="password" id="add-password" required>
+                            </div>
+                            <div class="popup-actions">
+                                <button type="submit" class="btn simpan">Simpan</button>
+                                <button type="button" class="btn batal add-close-btn">Batal</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             </section>
 
             <!-- Pop-Up Detail -->
