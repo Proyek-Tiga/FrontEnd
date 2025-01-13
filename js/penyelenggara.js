@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const tableBody = document.querySelector(".data-table tbody");
     const apiUrl = "https://tiket-backend-theta.vercel.app/api/users?role_name=penyelenggara";
+    const postUrl = "http://localhost:5000/api/users";
 
     // Fungsi untuk membuat baris tabel
     function createTableRow(index, name, email, id) {
@@ -74,10 +75,52 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Tutup popup
+    // Tutup popup detail
     document.querySelector(".close-btn").addEventListener("click", () => {
         document.getElementById("popup").style.display = "none";
     });
+
+    // Fungsi untuk membuka popup tambah penyelenggara
+    function showAddPopup() {
+        document.getElementById("add-popup").style.display = "block";
+    }
+
+    // Fungsi untuk menutup popup tambah penyelenggara
+    document.querySelector(".add-close-btn").addEventListener("click", () => {
+        document.getElementById("add-popup").style.display = "none";
+    });
+
+    // Fungsi untuk mengirim data penyelenggara baru ke API
+    async function addPenyelenggara(event) {
+        event.preventDefault();
+
+        const name = document.getElementById("add-name").value;
+        const email = document.getElementById("add-email").value;
+        const password = document.getElementById("add-password").value;
+
+        try {
+            const response = await fetch(postUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ name, email, password })
+            });
+
+            if (!response.ok) {
+                throw new Error("Gagal menambahkan penyelenggara baru");
+            }
+
+            document.getElementById("add-popup").style.display = "none"; // Tutup popup
+            fetchPenyelenggara(); // Refresh tabel
+        } catch (error) {
+            console.error("Terjadi kesalahan saat menambahkan penyelenggara:", error);
+        }
+    }
+
+    // Tambahkan event listener pada tombol tambah
+    document.getElementById("add-button").addEventListener("click", showAddPopup);
+    document.getElementById("add-form").addEventListener("submit", addPenyelenggara);
 
     // Panggil fungsi fetchPenyelenggara saat halaman dimuat
     fetchPenyelenggara();
