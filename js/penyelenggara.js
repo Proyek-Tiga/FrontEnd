@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("Gagal mengambil data penyelenggara");
             }
             const data = await response.json();
+            console.log(data); // Debug: tampilkan seluruh data yang diterima
 
             // Kosongkan tabel sebelum mengisi
             tableBody.innerHTML = "";
@@ -123,8 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
         editButtons.forEach(button => {
             button.addEventListener("click", async () => {
                 const userId = button.getAttribute("data-id");
+
                 try {
-                    // Fetch data pengguna berdasarkan ID
+                    // Fetch data pengguna berdasarkan ID menggunakan getUserById
                     const response = await fetch(`${apiUrl}/${userId}`, {
                         headers: {
                             "Authorization": `Bearer ${token}`
