@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const tableBody = document.querySelector(".data-table tbody");
     const apiUrl = "https://tiket-backend-theta.vercel.app/api/users?role_name=penyelenggara";
-    const postUrl = "http://localhost:5000/api/users";
+    const postUrl = "https://tiket-backend-theta.vercel.app/api/users";
 
     // Fungsi untuk membuat baris tabel
     function createTableRow(index, name, email, id) {
@@ -80,9 +80,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Tutup popup detail
+    // Fungsi untuk menutup semua popup
+    function closePopup(selector) {
+        const popup = document.querySelector(selector);
+        if (popup) {
+            popup.style.display = "none";
+        }
+    }
+
+    // Listener untuk tombol close pada popup detail
     document.querySelector(".close-btn").addEventListener("click", () => {
-        document.getElementById("popup").style.display = "none";
+        closePopup("#popup");
     });
 
     // Fungsi untuk membuka popup tambah penyelenggara
@@ -90,22 +98,22 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("add-popup").style.display = "block";
     }
 
-    // Fungsi untuk menutup popup tambah penyelenggara
+    // Listener untuk tombol close pada popup tambah penyelenggara
     document.querySelector(".add-close-btn").addEventListener("click", () => {
-        document.getElementById("add-popup").style.display = "none";
+        closePopup("#add-popup");
     });
 
     // Fungsi untuk mengirim data penyelenggara baru ke API
     async function addPenyelenggara(event) {
         event.preventDefault();
-    
+
         const name = document.getElementById("add-name").value;
         const email = document.getElementById("add-email").value;
         const password = document.getElementById("add-password").value;
-    
+
         // ID peran untuk penyelenggara (sesuai dari API/Postman)
         const role_id = "9c8ec6c5-39e4-45c2-abe2-65024d7bcae8";
-    
+
         try {
             const response = await fetch(postUrl, {
                 method: "POST",
@@ -115,23 +123,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 },
                 body: JSON.stringify({ role_id, name, email, password }) // Sertakan role_id
             });
-    
+
             if (!response.ok) {
                 throw new Error("Gagal menambahkan penyelenggara baru");
             }
-    
+
             // Bersihkan form
             document.getElementById("add-form").reset();
-    
+
             // Tutup popup
             document.getElementById("add-popup").style.display = "none";
-    
+
             // Refresh tabel penyelenggara
             fetchPenyelenggara();
         } catch (error) {
             console.error("Terjadi kesalahan saat menambahkan penyelenggara:", error);
         }
-    }    
+    }
 
     // Tambahkan event listener pada tombol tambah
     document.getElementById("add-button").addEventListener("click", showAddPopup);

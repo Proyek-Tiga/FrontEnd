@@ -3,6 +3,7 @@ body {
     margin: 0;
     font-family: 'Crimson Pro', serif; /* Menggunakan font Crimson Pro */
     background-color: #f8f9fd;
+    position: relative;
 }
 
 .dashboard-container {
