@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 tableBody.innerHTML += tableRow;
             });
 
-            addDetailButtonListeners(); // Tambahkan listener untuk tombol detail
+            addEditButtonListeners(); // Tambahkan listener untuk tombol detail
         } catch (error) {
             console.error("Terjadi kesalahan:", error);
         }
