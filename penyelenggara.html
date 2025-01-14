@@ -106,6 +106,7 @@
                     </table>
                 </div>
 
+                <!-- POP UP TAMBAH PENYELENGGARA -->
                 <div class="popup" id="add-popup" style="display: none;">
                     <div class="popup-content">
                         <h3>Tambah Penyelenggara</h3>
@@ -130,27 +131,33 @@
                     </div>
                 </div>
 
-            </section>
-
-            <!-- Pop-Up Detail -->
-            <div class="popup" id="popup" style="display: none;">
-                <div class="popup-content">
-                    <span class="close-btn">&times;</span>
-                    <h3>Detail Pembeli</h3>
-                    <div class="popup-detail-item">
-                        <label>Nama:</label>
-                        <div id="popup-nama" class="placeholder"></div>
-                    </div>
-                    <div class="popup-detail-item">
-                        <label>Email:</label>
-                        <div id="popup-email" class="placeholder"></div>
-                    </div>
-                    <div class="popup-detail-item">
-                        <label>Role:</label>
-                        <div id="popup-role" class="placeholder"></div>
+                <!-- Pop-up untuk Edit -->
+                <div id="edit-popup" class="popup" style="display: none;">
+                    <div class="popup-content">
+                        <span class="close-btn">&times;</span>
+                        <h2>Edit Data</h2>
+                        <form id="edit-form">
+                            <label for="edit-name">Nama</label>
+                            <input type="text" id="edit-name" placeholder="Masukkan Nama" required />
+                            <label for="edit-email">Email</label>
+                            <input type="email" id="edit-email" placeholder="Masukkan Email" required />
+                            <button type="submit" class="btn">Simpan</button>
+                        </form>
                     </div>
                 </div>
-            </div>
+
+                <!-- Pop-up untuk Konfirmasi Hapus -->
+                <div id="delete-popup" class="popup" style="display: none;">
+                    <div class="popup-content">
+                        <span class="close-btn">&times;</span>
+                        <h2>Hapus Data</h2>
+                        <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                        <button id="confirm-delete" class="btn">Ya, Hapus</button>
+                        <button id="cancel-delete" class="btn">Batal</button>
+                    </div>
+                </div>
+
+            </section>
         </main>
     </div>
     <script src="js/penyelenggara.js"></script>

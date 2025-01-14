@@ -16,8 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td>${name}</td>
                 <td>${email}</td>
                 <td>
-                    <button class="btn detail" data-id="${id}">
-                        <i class="fas fa-info-circle"></i>
+                    <button class="btn edit" data-id="${id}">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn delete" data-id="${id}">
+                        <i class="fas fa-trash"></i> Hapus
                     </button>
                 </td>
             </tr>
@@ -45,38 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
             addDetailButtonListeners(); // Tambahkan listener untuk tombol detail
         } catch (error) {
             console.error("Terjadi kesalahan:", error);
-        }
-    }
-
-    // Fungsi untuk menangani klik tombol detail
-    function addDetailButtonListeners() {
-        const detailButtons = document.querySelectorAll(".btn.detail");
-        detailButtons.forEach(button => {
-            button.addEventListener("click", (event) => {
-                const id = event.currentTarget.dataset.id;
-                showDetailPopup(id);
-            });
-        });
-    }
-
-    // Fungsi untuk menampilkan popup detail
-    async function showDetailPopup(id) {
-        try {
-            const response = await fetch(`${apiUrl}&id=${id}`);
-            if (!response.ok) {
-                throw new Error("Gagal mengambil detail penyelenggara");
-            }
-            const detail = await response.json();
-
-            // Isi data di popup
-            document.getElementById("popup-nama").textContent = detail.name || "Tidak ada data";
-            document.getElementById("popup-email").textContent = detail.email || "Tidak ada data";
-            document.getElementById("popup-role").textContent = detail.role_name || "Tidak ada data";
-
-            // Tampilkan popup
-            document.getElementById("popup").style.display = "block";
-        } catch (error) {
-            console.error("Terjadi kesalahan saat memuat detail:", error);
         }
     }
 
@@ -144,6 +115,82 @@ document.addEventListener("DOMContentLoaded", () => {
     // Tambahkan event listener pada tombol tambah
     document.getElementById("add-button").addEventListener("click", showAddPopup);
     document.getElementById("add-form").addEventListener("submit", addPenyelenggara);
+
+    // Fungsi untuk membuka form edit dan mengisinya dengan data
+    function showEditPopup(userId) {
+        // Ambil data user dari API menggunakan ID
+        fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Isi data pada form
+                document.getElementById('edit-name').value = data.name;
+                document.getElementById('edit-email').value = data.email;
+                // Simpan userId untuk dikirim saat update
+                document.getElementById('edit-form').dataset.userId = userId;
+                // Tampilkan popup
+                document.getElementById('edit-popup').style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Terjadi kesalahan:', error);
+            });
+    }
+
+    // Tambahkan event listener untuk tombol edit
+    function addEditButtonListeners() {
+        const editButtons = document.querySelectorAll('.btn.edit');
+        editButtons.forEach(button => {
+            button.addEventListener('click', (event) => {
+                const userId = event.target.getAttribute('data-id');
+                showEditPopup(userId);
+            });
+        });
+    }
+
+    // Fungsi untuk mengirim data yang telah diedit ke API
+    async function updateUser(event) {
+        event.preventDefault();
+
+        const userId = event.target.dataset.userId; // Ambil userId yang sudah disimpan
+        const name = document.getElementById('edit-name').value;
+        const email = document.getElementById('edit-email').value;
+
+        try {
+            const response = await fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                },
+                body: JSON.stringify({ name, email }) // Kirim data yang diedit
+            });
+
+            if (!response.ok) {
+                throw new Error("Gagal memperbarui data user");
+            }
+
+            // Tutup popup
+            closePopup('#edit-popup');
+
+            // Refresh tabel penyelenggara
+            fetchPenyelenggara();
+        } catch (error) {
+            console.error('Terjadi kesalahan saat memperbarui user:', error);
+        }
+    }
+
+    // Tambahkan event listener pada form edit
+    document.getElementById('edit-form').addEventListener('submit', updateUser);
+
+    // Fungsi untuk menutup popup edit
+    document.querySelector('.close-btn').addEventListener('click', () => {
+        closePopup('#edit-popup');
+    });
+
 
     // Panggil fungsi fetchPenyelenggara saat halaman dimuat
     fetchPenyelenggara();
