@@ -116,21 +116,29 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("add-button").addEventListener("click", showAddPopup);
     document.getElementById("add-form").addEventListener("submit", addPenyelenggara);
 
-    // Fungsi untuk membuka form edit dan mengisinya dengan data
     function showEditPopup(userId) {
-        // Ambil data user dari API menggunakan ID
+        if (!userId) {
+            console.error('User ID tidak valid!');
+            return;
+        }
+    
         fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
             }
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal mengambil data user');
+                }
+                return response.json();
+            })
             .then(data => {
                 // Isi data pada form
-                document.getElementById('edit-name').value = data.name;
-                document.getElementById('edit-email').value = data.email;
-                // Simpan userId untuk dikirim saat update
+                document.getElementById('edit-name').value = data.name || '';
+                document.getElementById('edit-email').value = data.email || '';
+                // Simpan userId untuk digunakan saat update
                 document.getElementById('edit-form').dataset.userId = userId;
                 // Tampilkan popup
                 document.getElementById('edit-popup').style.display = 'block';
@@ -138,18 +146,23 @@ document.addEventListener("DOMContentLoaded", () => {
             .catch(error => {
                 console.error('Terjadi kesalahan:', error);
             });
-    }
+    }    
 
     // Tambahkan event listener untuk tombol edit
     function addEditButtonListeners() {
         const editButtons = document.querySelectorAll('.btn.edit');
         editButtons.forEach(button => {
             button.addEventListener('click', (event) => {
-                const userId = event.target.getAttribute('data-id');
-                showEditPopup(userId);
+                // Pastikan mengambil data-id dari tombol yang di-klik
+                const userId = event.currentTarget.getAttribute('data-id');
+                if (userId) {
+                    showEditPopup(userId);
+                } else {
+                    console.error("User ID tidak ditemukan!");
+                }
             });
         });
-    }
+    }    
 
     // Fungsi untuk mengirim data yang telah diedit ke API
     async function updateUser(event) {
