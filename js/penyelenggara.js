@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+        alert('Token tidak ditemukan. Harap login ulang.');
+        return; // Hentikan eksekusi jika token tidak ditemukan
+    }
     const tableBody = document.querySelector(".data-table tbody");
     const apiUrl = "https://tiket-backend-theta.vercel.app/api/users?role_name=penyelenggara";
     const postUrl = "http://localhost:5000/api/users";
@@ -99,13 +104,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.getElementById("add-password").value;
     
         // ID peran untuk penyelenggara (sesuai dari API/Postman)
-        const role_id = "138d5ceb-0b26-481d-89d1-5a4c94b895d7";
+        const role_id = "9c8ec6c5-39e4-45c2-abe2-65024d7bcae8";
     
         try {
             const response = await fetch(postUrl, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
                 body: JSON.stringify({ role_id, name, email, password }) // Sertakan role_id
             });
