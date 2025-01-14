@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
     
-        fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
+        fetch(`http://localhost:5000/api/users/${userId}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('authToken')}`
