@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Iterasi data dan tambahkan ke tabel
             data.forEach((item, index) => {
-                const tableRow = createTableRow(index + 1, item.name, item.email, item.id);
+                const tableRow = createTableRow(index + 1, item.name, item.email, item.user_id);
                 tableBody.innerHTML += tableRow;
             });
 
@@ -155,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
             button.addEventListener('click', (event) => {
                 // Pastikan mengambil data-id dari tombol yang di-klik
                 const userId = event.currentTarget.getAttribute('data-id');
+                console.log("User ID:", userId); // Tambahkan log ini
                 if (userId) {
                     showEditPopup(userId);
                 } else {
@@ -173,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.getElementById('edit-email').value;
 
         try {
-            const response = await fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
+            const response = await fetch(`http://localhost:5000/api/users/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
