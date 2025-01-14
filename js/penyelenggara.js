@@ -93,30 +93,39 @@ document.addEventListener("DOMContentLoaded", () => {
     // Fungsi untuk mengirim data penyelenggara baru ke API
     async function addPenyelenggara(event) {
         event.preventDefault();
-
+    
         const name = document.getElementById("add-name").value;
         const email = document.getElementById("add-email").value;
         const password = document.getElementById("add-password").value;
-
+    
+        // ID peran untuk penyelenggara (sesuai dari API/Postman)
+        const role_id = "138d5ceb-0b26-481d-89d1-5a4c94b895d7";
+    
         try {
             const response = await fetch(postUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ name, email, password })
+                body: JSON.stringify({ role_id, name, email, password }) // Sertakan role_id
             });
-
+    
             if (!response.ok) {
                 throw new Error("Gagal menambahkan penyelenggara baru");
             }
-
-            document.getElementById("add-popup").style.display = "none"; // Tutup popup
-            fetchPenyelenggara(); // Refresh tabel
+    
+            // Bersihkan form
+            document.getElementById("add-form").reset();
+    
+            // Tutup popup
+            document.getElementById("add-popup").style.display = "none";
+    
+            // Refresh tabel penyelenggara
+            fetchPenyelenggara();
         } catch (error) {
             console.error("Terjadi kesalahan saat menambahkan penyelenggara:", error);
         }
-    }
+    }    
 
     // Tambahkan event listener pada tombol tambah
     document.getElementById("add-button").addEventListener("click", showAddPopup);
