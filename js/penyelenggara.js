@@ -117,95 +117,80 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("add-button").addEventListener("click", showAddPopup);
     document.getElementById("add-form").addEventListener("submit", addPenyelenggara);
 
-    function showEditPopup(userId) {
-        if (!userId) {
-            console.error('User ID tidak valid!');
-            return;
-        }
-    
-        fetch(`http://localhost:5000/api/users/${userId}`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('authToken')}`
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Gagal mengambil data user');
-                }
-                return response.json();
-            })
-            .then(data => {
-                // Isi data pada form
-                document.getElementById('edit-name').value = data.name || '';
-                document.getElementById('edit-email').value = data.email || '';
-                // Simpan userId untuk digunakan saat update
-                document.getElementById('edit-form').dataset.userId = userId;
-                // Tampilkan popup
-                document.getElementById('edit-popup').style.display = 'block';
-            })
-            .catch(error => {
-                console.error('Terjadi kesalahan:', error);
-            });
-    }    
-
-    // Tambahkan event listener untuk tombol edit
+    // Fungsi untuk menangani klik tombol Edit
     function addEditButtonListeners() {
-        const editButtons = document.querySelectorAll('.btn.edit');
+        const editButtons = document.querySelectorAll(".btn.edit");
         editButtons.forEach(button => {
-            button.addEventListener('click', (event) => {
-                // Pastikan mengambil data-id dari tombol yang di-klik
-                const userId = event.currentTarget.getAttribute('data-id');
-                console.log("User ID:", userId); // Tambahkan log ini
-                if (userId) {
-                    showEditPopup(userId);
-                } else {
-                    console.error("User ID tidak ditemukan!");
+            button.addEventListener("click", async () => {
+                const userId = button.getAttribute("data-id");
+                try {
+                    // Fetch data pengguna berdasarkan ID
+                    const response = await fetch(`${apiUrl}/${userId}`, {
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+                    if (!response.ok) {
+                        throw new Error("Gagal mengambil data pengguna");
+                    }
+
+                    const userData = await response.json();
+
+                    // Isi form edit dengan data pengguna
+                    document.getElementById("edit-name").value = userData.name;
+                    document.getElementById("edit-email").value = userData.email;
+
+                    // Simpan ID pengguna ke elemen form untuk referensi
+                    document.getElementById("edit-form").setAttribute("data-id", userId);
+
+                    // Tampilkan popup edit
+                    document.getElementById("edit-popup").style.display = "block";
+                } catch (error) {
+                    console.error("Terjadi kesalahan:", error);
                 }
             });
         });
-    }    
+    }
 
-    // Fungsi untuk mengirim data yang telah diedit ke API
-    async function updateUser(event) {
+    // Fungsi untuk menyimpan data edit
+    async function saveEditData(event) {
         event.preventDefault();
 
-        const userId = event.target.dataset.userId; // Ambil userId yang sudah disimpan
-        const name = document.getElementById('edit-name').value;
-        const email = document.getElementById('edit-email').value;
+        const userId = document.getElementById("edit-form").getAttribute("data-id");
+        const name = document.getElementById("edit-name").value;
+        const email = document.getElementById("edit-email").value;
 
         try {
-            const response = await fetch(`http://localhost:5000/api/users/${userId}`, {
-                method: 'PUT',
+            const response = await fetch(`${apiUrl}/${userId}`, {
+                method: "PUT", // Gunakan metode sesuai API (PUT atau PATCH)
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({ name, email }) // Kirim data yang diedit
+                body: JSON.stringify({ name, email })
             });
 
             if (!response.ok) {
-                throw new Error("Gagal memperbarui data user");
+                throw new Error("Gagal memperbarui data pengguna");
             }
 
-            // Tutup popup
-            closePopup('#edit-popup');
+            // Tutup popup edit
+            document.getElementById("edit-popup").style.display = "none";
 
-            // Refresh tabel penyelenggara
+            // Refresh data tabel
             fetchPenyelenggara();
         } catch (error) {
-            console.error('Terjadi kesalahan saat memperbarui user:', error);
+            console.error("Terjadi kesalahan saat menyimpan data edit:", error);
         }
     }
 
-    // Tambahkan event listener pada form edit
-    document.getElementById('edit-form').addEventListener('submit', updateUser);
+    // Listener untuk tombol Simpan di form edit
+    document.getElementById("edit-form").addEventListener("submit", saveEditData);
 
-    // Fungsi untuk menutup popup edit
-    document.querySelector('.close-btn').addEventListener('click', () => {
-        closePopup('#edit-popup');
+    // Listener untuk tombol close pada popup edit
+    document.querySelector(".close-btn").addEventListener("click", () => {
+        closePopup("#edit-popup");
     });
-
 
     // Panggil fungsi fetchPenyelenggara saat halaman dimuat
     fetchPenyelenggara();
