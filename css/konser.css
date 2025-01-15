@@ -227,59 +227,69 @@ body {
     display: block;
 }
 
-/* Container */
-.table-container {
+.content {
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #fff;
-    border-radius: 10px;
-    margin: 20px auto;
-    max-width: 1000px;
 }
 
-/* Title */
-.table-container h2 {
-    text-align: center;
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-size: 20px;
+}
+
+.title {
+    width: 100%; /* Agar teks memenuhi lebar penuh kontainer */
+    text-align: center; /* Menjadikan teks berada di tengah */
     margin-bottom: 20px;
+    font-size: 24px;
     color: #333;
-    font-weight: bold;
 }
 
-/* Table Styling */
-.data-table {
-    width: 100%;
-    border-collapse: collapse;
+.concert-card {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.concert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.concert-header h3 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.status {
     font-size: 14px;
-    text-align: left;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: #ffcccc;
+    color: #a94442;
 }
 
-.data-table thead th {
-    background-color: #f4f4f4;
-    color: #333;
-    padding: 12px;
-    border-bottom: 2px solid #ddd;
-    text-transform: uppercase; /* Mengatur teks menjadi huruf kapital */
-    text-align: left; /* Mengatur teks menjadi rata kiri */
-    vertical-align: middle; /* Memastikan teks tetap rata tengah secara vertikal */
-    white-space: nowrap; /* Mencegah teks turun ke bawah */
-}
-
-
-.data-table tbody td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+.concert-details p {
+    margin: 5px 0;
+    font-size: 14px;
     color: #555;
-    white-space: nowrap; /* Mencegah teks menjadi ke bawah */
-    overflow: hidden; /* Memotong teks yang melampaui lebar kolom */
-    text-overflow: ellipsis; /* Menambahkan ellipsis (...) jika teks terpotong */
 }
 
-.data-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.data-table tbody tr:hover {
-    background-color: #f1f1f1;
+.concert-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
 }
 
 /* Action Buttons */

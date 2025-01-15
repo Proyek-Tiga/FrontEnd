@@ -29,7 +29,8 @@
                 <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item active"><i class="fas fa-music"></i> Konser</a>
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
-                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i> Penyelenggara</a>
+                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i>
+                    Penyelenggara</a>
                 <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
             </nav>
         </aside>
@@ -53,46 +54,32 @@
                             </li>
                         </ul>
                     </div>
-                </div> 
+                </div>
             </header>
 
             <section class="content">
-                <!-- Table Section -->
-                <div class="table-container">
-                    <h2>Data Konser</h2>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Tanggal</th>
-                                <th>Nama Konser</th>
-                                <th>Lokasi</th>
-                                <th>Jumlah Tiket</th>
-                                <th>Harga</th>
-                                <th>Nama Penyelenggara</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>2024-12-01</td>
-                                <td>Konser Musik 1</td>
-                                <td>Stadion Utama Gelora Bung Karno</td>
-                                <td>75,000</td>
-                                <td>Rp 200,000</td>
-                                <td>AuSa Beats</td>
-                                <td>Belum Di-Acc</td>
-                                <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
-                                </td>
-                            </tr>
-                            <!-- Add more rows as needed -->
-                        </tbody>
-                    </table>
-                </div>
+                <!-- Card Section -->
+                <div class="card-container">
+                    <h2 class="title">Data Konser</h2>
+                    <!-- <div class="concert-card">
+                        <div class="concert-header">
+                            <h3>Konser Musik 1</h3>
+                            <span class="status">Belum Di-Acc</span>
+                        </div>
+                        <div class="concert-details">
+                            <p><strong>Tanggal:</strong> 2024-12-01</p>
+                            <p><strong>Lokasi:</strong> Stadion Utama Gelora Bung Karno</p>
+                            <p><strong>Jumlah Tiket:</strong> 75,000</p>
+                            <p><strong>Harga:</strong> Rp 200,000</p>
+                            <p><strong>Penyelenggara:</strong> AuSa Beats</p>
+                        </div>
+                        <div class="concert-actions">
+                            <button class="btn edit">Edit</button>
+                            <button class="btn delete">Hapus</button>
+                        </div>
+                    </div> -->
+                    <!-- Tambahkan lebih banyak kartu sesuai kebutuhan -->
+                </div>                
             </section>
         </main>
     </div>
@@ -107,7 +94,7 @@
                     <option value="Setuju">Setuju</option>
                     <option value="Tidak Setuju">Tidak Setuju</option>
                 </select>
-                
+
                 <div class="popup-actions">
                     <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
                     <button type="button" class="btn cancel" id="btnBatalEdit" aria-label="Batal">Batal</button>
