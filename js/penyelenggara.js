@@ -170,19 +170,29 @@ document.addEventListener("DOMContentLoaded", () => {
         const name = document.getElementById("edit-name").value;
         const email = document.getElementById("edit-email").value;
 
+        // Tambahkan role_id jika diperlukan
+        const role_id = "9c8ec6c5-39e4-45c2-abe2-65024d7bcae8";
+
         try {
+            console.log("Sending PUT request to:", `https://tiket-backend-theta.vercel.app/api/users/${userId}`);
+            console.log("Request body:", { name, email, role_id });
+    
             const response = await fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
                 method: "PUT", // Gunakan metode sesuai API (PUT atau PATCH)
                 headers: {
                     "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: JSON.stringify({ name, email })
+                body: JSON.stringify({ name, email, role_id })
             });
 
             if (!response.ok) {
+                const errorText = await response.text(); // Tampilkan error detail
+                console.error("Error response:", errorText);
                 throw new Error("Gagal memperbarui data pengguna");
             }
+    
+            console.log("Berhasil memperbarui pengguna.");
 
             // Tutup popup edit
             document.getElementById("edit-popup").style.display = "none";
@@ -191,6 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
             fetchPenyelenggara();
         } catch (error) {
             console.error("Terjadi kesalahan saat menyimpan data edit:", error);
+            alert("Terjadi kesalahan: " + error.message);
         }
     }
 
