@@ -51,6 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             addEditButtonListeners(); // Tambahkan listener untuk tombol detail
+            addDeleteButtonListeners();
         } catch (error) {
             console.error("Terjadi kesalahan:", error);
         }
@@ -176,7 +177,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             console.log("Sending PUT request to:", `https://tiket-backend-theta.vercel.app/api/users/${userId}`);
             console.log("Request body:", { name, email, role_id });
-    
+
             const response = await fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
                 method: "PUT", // Gunakan metode sesuai API (PUT atau PATCH)
                 headers: {
@@ -191,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Error response:", errorText);
                 throw new Error("Gagal memperbarui data pengguna");
             }
-    
+
             console.log("Berhasil memperbarui pengguna.");
 
             // Tutup popup edit
@@ -212,6 +213,41 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".close-btn").addEventListener("click", () => {
         closePopup("#edit-popup");
     });
+
+    function addDeleteButtonListeners() {
+        const deleteButtons = document.querySelectorAll(".btn.delete");
+        deleteButtons.forEach(button => {
+            button.addEventListener("click", async () => {
+                const userId = button.getAttribute("data-id");
+                const confirmation = confirm("Apakah Anda yakin ingin menghapus pengguna ini?");
+                if (!confirmation) return;
+
+                try {
+                    const response = await fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
+                        method: "DELETE",
+                        headers: {
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text(); // Debug detail error
+                        console.error("Error response:", errorText);
+                        throw new Error("Gagal menghapus pengguna.");
+                    }
+
+                    console.log("Pengguna berhasil dihapus.");
+                    alert("Pengguna berhasil dihapus!");
+
+                    // Refresh tabel
+                    fetchPenyelenggara();
+                } catch (error) {
+                    console.error("Terjadi kesalahan saat menghapus pengguna:", error);
+                    alert("Terjadi kesalahan: " + error.message);
+                }
+            });
+        });
+    }
 
     // Panggil fungsi fetchPenyelenggara saat halaman dimuat
     fetchPenyelenggara();
