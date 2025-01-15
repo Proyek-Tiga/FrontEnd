@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <p><strong>Atas Nama:</strong> ${concert.atas_nama}</p>
                 </div>
                 <div class="concert-actions">
-                    <button class="btn edit"><i class="fas fa-edit"></i>Edit</button>
+                    <button class="btn edit" data-id="${concert.id}"><i class="fas fa-edit"></i>Edit</button>
                     <button class="btn delete"><i class="fas fa-trash"></i>Hapus</button>
                 </div>
             `;
@@ -58,8 +58,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Tambahkan event listener untuk tombol edit
             const editButtons = container.querySelectorAll('.btn.edit');
             editButtons.forEach(button => {
-                button.addEventListener('click', (e) => openEditModal(e.target.closest('button').dataset.id));
-            });
+                button.addEventListener('click', (e) => {
+                    const concertId = e.target.closest('button').dataset.id;
+                    if (concertId) {
+                        openEditModal(concertId);
+                    } else {
+                        console.error('Concert ID tidak ditemukan pada tombol.');
+                    }
+                });
+            });            
         } catch (error) {
             console.error('Error fetching concert data:', error);
         }
@@ -67,6 +74,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Function to open edit modal
     async function openEditModal(concertId) {
+        if (!concertId) {
+            console.error('Concert ID tidak valid:', concertId);
+            alert('Terjadi kesalahan, ID konser tidak ditemukan.');
+            return;
+        }
+        
         try {
             const response = await fetch(`${API_URL}/${concertId}`);
             const concert = await response.json();
