@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.getElementById("edit-email").value;
 
         try {
-            const response = await fetch(`${apiUrl}/${userId}`, {
+            const response = await fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
                 method: "PUT", // Gunakan metode sesuai API (PUT atau PATCH)
                 headers: {
                     "Content-Type": "application/json",
