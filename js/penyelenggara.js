@@ -130,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 try {
                     // Fetch data pengguna berdasarkan ID menggunakan getUserById
-                    const response = await fetch(`${apiUrl}/${userId}`, {
+                    const response = await fetch(`https://tiket-backend-theta.vercel.app/api/users/${userId}`, {
                         headers: {
                             "Authorization": `Bearer ${token}`
                         }
@@ -140,6 +140,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     }
 
                     const userData = await response.json();
+                    console.log("Data pengguna:", userData);
+
+                    if (!userData || !userData.name) {
+                        throw new Error("Data pengguna tidak valid atau tidak ditemukan");
+                    }
 
                     // Isi form edit dengan data pengguna
                     document.getElementById("edit-name").value = userData.name;
