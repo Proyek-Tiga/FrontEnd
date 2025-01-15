@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin | Data Pembeli</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/pembeli.css">
+    <link rel="stylesheet" href="css/penyelenggara.css">
 
     <!-- Font Chewy -->
     <link href="https://fonts.googleapis.com/css2?family=Chewy&display=swap" rel="stylesheet">
@@ -29,8 +29,8 @@
                 <a href="permintaan.html" class="menu-item"><i class="fa-solid fa-bell"></i> Permintaan</a>
                 <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
-                <a href="pembeli.html" class="menu-item active"><i class="fas fa-users"></i> Pembeli</a>
-                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i> Penyelenggara</a>
+                <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
+                <a href="penyelenggara.html" class="menu-item active"><i class="fa-solid fa-users-rectangle"></i></i>Penyelenggara</a>
                 <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
             </nav>
         </aside>
@@ -54,7 +54,7 @@
                             </li>
                         </ul>
                     </div>
-                </div> 
+                </div>
             </header>
             <!-- SAMPAII SINI YAAA -->
 
@@ -63,6 +63,10 @@
                 <!-- Table Section -->
                 <div class="table-container">
                     <h2>Data Pembeli</h2>
+                    <!-- Tombol Tambah Penyelenggara -->
+                    <button id="add-button" class="btn tambah">
+                        <i class="fas fa-plus"></i> Tambah Pembeli
+                    </button>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -73,50 +77,95 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            <!-- <tr>
                                 <td>1</td>
                                 <td>Ahmad Taufik</td>
                                 <td>ahmad.taufik@example.com</td>
                                 <td>
                                     <button class="btn detail" data-id="1"><i class="fas fa-info-circle"></i></button>
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td>2</td>
                                 <td>Siti Aisyah</td>
                                 <td>siti.aisyah@example.com</td>
                                 <td>
                                     <button class="btn detail" data-id="2"><i class="fas fa-info-circle"></i></button>
                                 </td>
-                            </tr>
-                            <tr>
+                            </tr> -->
+                            <!-- <tr>
                                 <td>3</td>
                                 <td>Roni Saputra</td>
                                 <td>roni.saputra@example.com</td>
                                 <td>
                                     <button class="btn detail" data-id="3"><i class="fas fa-info-circle"></i></button>
                                 </td>
-                            </tr>
+                            </tr> -->
                         </tbody>
                     </table>
                 </div>
-            </section>
-            
-            <!-- Pop-Up Detail -->
-            <div class="popup" id="popup">
-                <div class="popup-content">
-                    <span class="close-btn">&times;</span>
-                    <h3>Detail Pembeli</h3>
-                    <div class="popup-detail-item">
-                        <label>Nama:</label>
-                        <div id="popup-nama" class="placeholder"></div>
-                    </div>
-                    <div class="popup-detail-item">
-                        <label>Email:</label>
-                        <div id="popup-email" class="placeholder"></div>
+
+                <!-- POP UP TAMBAH PENYELENGGARA -->
+                <div class="popup" id="add-popup" style="display: none;">
+                    <div class="popup-content">
+                        <h3>Tambah Pembeli</h3>
+                        <form id="add-form">
+                            <div class="popup-detail-item">
+                                <label for="add-name">Nama:</label>
+                                <input type="text" id="add-name" required>
+                            </div>
+                            <div class="popup-detail-item">
+                                <label for="add-email">Email:</label>
+                                <input type="email" id="add-email" required>
+                            </div>
+                            <div class="popup-detail-item">
+                                <label for="add-password">Password:</label>
+                                <input type="password" id="add-password" required>
+                            </div>
+                            <div class="popup-actions">
+                                <button type="submit" class="btn simpan">Simpan</button>
+                                <button type="button" class="btn batal add-close-btn">Batal</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>            
+
+                <!-- Pop-up untuk Edit -->
+                <div id="edit-popup" class="popup" style="display: none;">
+                    <div class="popup-content">
+                        <!-- <span class="close-btn">&times;</span> -->
+                        <h3>Edit Data</h3>
+                        <form id="edit-form">
+                            <div class="popup-detail-item">
+                                <label for="edit-name">Nama:</label>
+                                <input type="text" id="edit-name" required>
+                            </div>
+                            <div class="popup-detail-item">
+                                <label for="edit-email">Email:</label>
+                                <input type="email" id="edit-email" required>
+                            </div>
+                            <div class="popup-actions">
+                                <button type="submit" class="btn simpan">Simpan</button>
+                                <button type="button" class="btn batal close-btn">Batal</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Pop-up untuk Konfirmasi Hapus -->
+                <div id="delete-popup" class="popup" style="display: none;">
+                    <div class="popup-content">
+                        <span class="close-btn">&times;</span>
+                        <h2>Hapus Data</h2>
+                        <p>Apakah Anda yakin ingin menghapus data ini?</p>
+                        <button id="confirm-delete" class="btn">Ya, Hapus</button>
+                        <button id="cancel-delete" class="btn">Batal</button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
     <script src="js/pembeli.js"></script>
     <script src="js/profile.js"></script>
 </body>
