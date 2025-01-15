@@ -305,6 +305,9 @@ body {
     text-align: center;
     margin: 2px; /* Jarak antar tombol */
     width: 80px; /* Lebar seragam */
+    margin-bottom: 10px;
+    background-color: #0056b3;
+    color: #fff;
 }
 
 .btn.edit {
@@ -366,6 +369,7 @@ body {
 
 .modal-content h2 {
     margin-top: 0;
+    text-align: center;
 }
 
 .modal-content .close {

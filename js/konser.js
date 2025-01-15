@@ -5,6 +5,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Token tidak ditemukan. Harap login ulang.');
         return;
     }
+    const addConcertBtn = document.getElementById("add-concert-btn");
+    const addConcertModal = document.getElementById("add-concert-modal");
+    const closeModal = document.querySelector("#add-concert-modal .close");
 
     async function fetchConcerts() {
         try {
@@ -34,7 +37,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 });
 
                 concertCard.innerHTML = `
-                    <img src="${concert.image || 'https://via.placeholder.com/300x200'}" alt="Concert Image" class="concert-image">
                     <div class="concert-header">
                         <h3>${concert.nama_konser}</h3>
                         <select class="status-dropdown">
@@ -74,6 +76,32 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Gagal memuat data konser.');
         }
     }
+
+    // Open modal
+    addConcertBtn.addEventListener("click", () => {
+        addConcertModal.style.display = "block";
+    });
+
+    // Close modal
+    closeModal.addEventListener("click", () => {
+        addConcertModal.style.display = "none";
+    });
+
+    // Close modal on clicking outside
+    window.addEventListener("click", (event) => {
+        if (event.target === addConcertModal) {
+            addConcertModal.style.display = "none";
+        }
+    });
+
+    // Handle form submission (optional)
+    const addConcertForm = document.getElementById("add-concert-form");
+    addConcertForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert("Konser berhasil ditambahkan!");
+        addConcertModal.style.display = "none";
+        addConcertForm.reset();
+    });
 
     async function openEditModal(concertId) {
         if (!concertId) {
