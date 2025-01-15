@@ -84,24 +84,39 @@
         </main>
     </div>
 
-    <!-- Popup Form Edit Status Konser -->
-    <div class="popup" id="popupEditKonser" style="display: none;">
-        <div class="popup-content">
-            <h3>Edit Status Konser</h3>
-            <form id="formEditKonser">
-                <label for="status">Status:</label>
-                <select id="status" name="status">
-                    <option value="Setuju">Setuju</option>
-                    <option value="Tidak Setuju">Tidak Setuju</option>
-                </select>
-
-                <div class="popup-actions">
-                    <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                    <button type="button" class="btn cancel" id="btnBatalEdit" aria-label="Batal">Batal</button>
-                </div>
+    <!-- POP UNTUK EDIT KONSER -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Konser</h2>
+            <form id="edit-form">
+                <input type="hidden" id="concert-id">
+                <label for="nama_konser">Nama Konser</label>
+                <input type="text" id="nama_konser" name="nama_konser" required>
+    
+                <label for="tanggal_konser">Tanggal Konser</label>
+                <input type="datetime-local" id="tanggal_konser" name="tanggal_konser" required>
+    
+                <label for="harga">Harga</label>
+                <input type="number" id="harga" name="harga" required>
+    
+                <label for="image">URL Gambar</label>
+                <input type="url" id="image" name="image">
+    
+                <label for="jenis_bank">Jenis Bank</label>
+                <input type="text" id="jenis_bank" name="jenis_bank" required>
+    
+                <label for="atas_nama">Atas Nama</label>
+                <input type="text" id="atas_nama" name="atas_nama" required>
+    
+                <label for="rekening">Rekening</label>
+                <input type="number" id="rekening" name="rekening" required>
+    
+                <button type="submit" class="btn">Simpan</button>
             </form>
         </div>
     </div>
+    
 
     <!-- Link to external JS file -->
     <script src="js/konser.js"></script>
