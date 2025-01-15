@@ -7,13 +7,16 @@ async function fetchConcerts() {
         const concerts = await response.json();
 
         const container = document.querySelector('.card-container');
-        container.innerHTML = ''; // Clear existing content
+        
+        // Hapus hanya elemen dinamis (kartu konser), bukan elemen statis seperti judul
+        const cards = container.querySelectorAll('.concert-card');
+        cards.forEach(card => card.remove());
 
         concerts.forEach(concert => {
             const concertCard = document.createElement('div');
             concertCard.classList.add('concert-card');
 
-            // Format the date for better readability
+            // Format tanggal
             const formattedDate = new Date(concert.tanggal_konser).toLocaleDateString('id-ID', {
                 day: '2-digit',
                 month: 'long',
