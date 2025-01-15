@@ -42,7 +42,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Iterasi data dan tambahkan ke tabel
             data.forEach((item, index) => {
-                console.log("User ID:", item.user_id); // Pastikan ID tidak kosong
+                if (!item.name || !item.email || !item.user_id) {
+                    console.warn(`Data tidak lengkap untuk item:`, item);
+                    return; // Lewati item jika datanya tidak lengkap
+                }
                 const tableRow = createTableRow(index + 1, item.name, item.email, item.user_id);
                 tableBody.innerHTML += tableRow;
             });
