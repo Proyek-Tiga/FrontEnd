@@ -414,6 +414,7 @@ body {
     color: white;
     border: none;
     cursor: pointer;
+    width: 100%;
 }
 
 .modal-content form button:hover {

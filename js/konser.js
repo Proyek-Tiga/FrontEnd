@@ -138,9 +138,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
 
         try {
-            const response = await fetch(API_KONSER, {
+            const response = await fetch(API_URL, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${token}` },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, // Gunakan header Authorization
+                },
                 body: formData,
             });
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
