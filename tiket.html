@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Ausa Beats Lokasi</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="css/lokasi.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -26,12 +26,12 @@
             <nav class="menu">
                 <a href="index.html" class="menu-item"><i class="fas fa-home"></i> Dasbor</a>
                 <a href="permintaan.html" class="menu-item"><i class="fa-solid fa-bell"></i> Permintaan</a>
-                <a href="lokasi.html" class="menu-item active"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
+                <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
                 <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i> Penyelenggara</a>
                 <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
-                <a href="tiket.html" class="menu-item"><i class="fas fa-ticket"></i> Tiket</a>
+                <a href="tiket.html" class="menu-item  active"><i class="fas fa-ticket"></i> Tiket</a>
             </nav>
         </aside>
 
@@ -54,108 +54,86 @@
                             </li>
                         </ul>
                     </div>
-                </div> 
+                </div>                
             </header>
-
             <section class="content">
                 <!-- Table Section -->
                 <div class="table-container">
-                    <h2>Data Lokasi</h2>
-                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Lokasi</button>
+                    <h2>Data Tiket</h2>
+                    <button class="btn add" id="btnTambahTiket" aria-label="Tambah Tiket">Tambah Tiket</button>
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Lokasi</th>
-                                <th>Kapasitas Orang</th>
+                                <th>Nama Tiket</th>
+                                <th>Harga</th>
+                                <th>Konser</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr>
-                                <td>1</td>
-                                <td>Stadion Utama Gelora Bung Karno</td>
-                                <td>75,000</td>
-                                <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
-                                </td>
-                            </tr> -->
-                            <!-- <tr>
-                                <td>2</td>
-                                <td>Lapangan Merdeka</td>
-                                <td>10,000</td>
-                                <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
-                                </td>
-                            </tr> -->
-                            <!-- <td>3</td>
-                                <td>Gedung Serbaguna</td>
-                                <td>1,500</td>
-                                <td>
-                                    <button class="btn edit">Edit</button>
-                                    <button class="btn delete">Hapus</button>
-                                </td> -->
                         </tbody>
                     </table>
                 </div>
             </section>
-
-            <!-- Popup Form Tambah Konser -->
-            <div class="popup" id="popupTambahKonser" style="display: none;">
+            
+            <!-- Popup Form Tambah Tiket -->
+            <div class="popup" id="popupTambahTiket" style="display: none;">
                 <div class="popup-content">
-                    <h3>Tambah Lokasi</h3>
-                    <form id="formTambahKonser">
-                        <label for="lokasi">Lokasi:</label>
-                        <input type="text" id="lokasi" name="lokasi" placeholder="Masukkan lokasi konser" required>
-
-                        <label for="kapasitas">Kapasitas Orang:</label>
-                        <input type="number" id="kapasitas" name="kapasitas" placeholder="Masukkan kapasitas" required>
-
+                    <h3>Tambah Tiket</h3>
+                    <form id="formTambahTiket">
+                        <label for="namaTiket">Nama Tiket:</label>
+                        <input type="text" id="namaTiket" name="namaTiket" placeholder="Masukkan nama tiket" required>
+            
+                        <label for="hargaTiket">Harga:</label>
+                        <input type="number" id="hargaTiket" name="hargaTiket" placeholder="Masukkan harga tiket" required>
+            
+                        <label for="konser">Konser:</label>
+                        <input type="text" id="konser" name="konser" placeholder="Masukkan nama konser" required>
+            
                         <div class="popup-actions">
                             <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                            <button type="button" class="btn cancel" id="btnBatalTambah"
-                                aria-label="Batal">Batal</button>
+                            <button type="button" class="btn cancel" id="btnBatalTambahTiket" aria-label="Batal">Batal</button>
                         </div>
                     </form>
                 </div>
             </div>
-
-            <div id="popupEditKonser" class="popup" style="display: none;">
+            
+            <!-- Popup Form Edit Tiket -->
+            <div id="popupEditTiket" class="popup" style="display: none;">
                 <div class="popup-content">
-                    <h3>Edit Lokasi</h3>
-                    <form id="formEditKonser">
-                        <label for="editLokasi">Lokasi:</label>
-                        <input type="text" id="editLokasi" required>
-                        <label for="editKapasitas">Kapasitas:</label>
-                        <input type="number" id="editKapasitas" required>
+                    <h3>Edit Tiket</h3>
+                    <form id="formEditTiket">
+                        <label for="editNamaTiket">Nama Tiket:</label>
+                        <input type="text" id="editNamaTiket" required>
+                        
+                        <label for="editHargaTiket">Harga:</label>
+                        <input type="number" id="editHargaTiket" required>
+                        
+                        <label for="editKonser">Konser:</label>
+                        <input type="text" id="editKonser" required>
+                        
                         <div class="popup-actions">
                             <button type="submit" class="btn">Simpan Perubahan</button>
-                            <button type="button" id="btnBatalEdit" class="btn">Batal</button>
+                            <button type="button" id="btnBatalEditTiket" class="btn">Batal</button>
                         </div>
                     </form>
                 </div>
             </div>
-
+            
             <!-- Pop-up Konfirmasi Hapus -->
-            <div id="popupHapusKonser" class="popup" style="display: none;">
+            <div id="popupHapusTiket" class="popup" style="display: none;">
                 <div class="popup-content">
                     <h3>Konfirmasi Hapus</h3>
-                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                    <button id="btnKonfirmasiHapus" class="btn danger">Hapus</button>
-                    <button id="btnBatalHapus" class="btn">Batal</button>
+                    <p>Apakah Anda yakin ingin menghapus data tiket ini?</p>
+                    <button id="btnKonfirmasiHapusTiket" class="btn danger">Hapus</button>
+                    <button id="btnBatalHapusTiket" class="btn">Batal</button>
                 </div>
             </div>
-
         </main>
     </div>
-
     <!-- Link to external JS file -->
-    <!-- <script src="js/index.js"></script> -->
-    <!-- <script src="js/lokasi.js"></script> -->
-    <script src="js/location.js"></script>
     <script src="js/profile.js"></script>
-</body>
+    <script src="js/tiket.js"></script>
 
-</html>
+            
