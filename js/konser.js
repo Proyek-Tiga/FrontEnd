@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const API_URL = 'https://tiket-backend-theta.vercel.app/api/konser';
+    const API_LOKASI = 'https://tiket-backend-theta.vercel.app/api/lokasi';
     const token = localStorage.getItem("authToken");
     if (!token) {
         alert('Token tidak ditemukan. Harap login ulang.');
@@ -96,6 +97,60 @@ document.addEventListener('DOMContentLoaded', async () => {
             addConcertModal.style.display = "none";
         }
     });
+
+    async function fetchLokasi() {
+        try {
+            const response = await fetch(API_LOKASI, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            const lokasiData = await response.json();
+            const lokasiDropdown = document.getElementById('concert-location');
+            lokasiData.forEach(lokasi => {
+                const option = document.createElement('option');
+                option.value = lokasi.lokasi_id;
+                option.textContent = `${lokasi.lokasi} (Tiket: ${lokasi.tiket})`;
+                lokasiDropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error fetching lokasi:', error);
+        }
+    }
+
+    // Tambahkan konser
+    async function addConcert(event) {
+        event.preventDefault();
+
+        const formData = new FormData();
+        formData.append('nama_konser', document.getElementById('concert-name').value);
+        formData.append('tanggal_konser', document.getElementById('concert-date').value);
+        formData.append('lokasi_id', document.getElementById('concert-location').value);
+        formData.append('harga', document.getElementById('ticket-price').value);
+        const imageInput = document.getElementById('concert-image');
+        if (imageInput.files[0]) {
+            formData.append('image', imageInput.files[0]);
+        }
+
+        try {
+            const response = await fetch(API_KONSER, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` },
+                body: formData,
+            });
+            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+            alert('Konser berhasil ditambahkan!');
+            document.getElementById('add-concert-form').reset();
+            document.getElementById('add-concert-modal').style.display = 'none';
+            // Refresh concert list
+            fetchConcerts();
+        } catch (error) {
+            console.error('Error adding concert:', error);
+            alert('Gagal menambahkan konser.');
+        }
+    }
+
+    // Event listeners
+    document.getElementById('add-concert-form').addEventListener('submit', addConcert);
 
     // Handle form submission (optional)
     const addConcertForm = document.getElementById("add-concert-form");

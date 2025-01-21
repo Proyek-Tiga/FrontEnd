@@ -99,13 +99,13 @@
                 <input type="datetime-local" id="concert-date" name="concert_date" required>
 
                 <label for="concert-location">Lokasi</label>
-                <input type="text" id="concert-location" name="concert_location" required>
-
-                <label for="ticket-count">Jumlah Tiket</label>
-                <input type="number" id="ticket-count" name="ticket_count" required>
+                <select id="concert-location" name="concert_location" required></select>
 
                 <label for="ticket-price">Harga Tiket</label>
                 <input type="number" id="ticket-price" name="ticket_price" required>
+
+                <label for="concert-image">Gambar Konser</label>
+                <input type="file" id="concert-image" name="concert_image" accept="image/*" required>
 
                 <button type="submit" class="btn submit">Tambah</button>
             </form>
