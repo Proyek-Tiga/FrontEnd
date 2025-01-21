@@ -141,7 +141,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`, // Gunakan header Authorization
                 },
                 body: formData,
