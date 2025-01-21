@@ -105,7 +105,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
             if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
             const lokasiData = await response.json();
+            console.log('Data Lokasi:', lokasiData); // Tambahkan log di sini
+
             const lokasiDropdown = document.getElementById('concert-location');
+            if (!lokasiDropdown) {
+                console.error('Dropdown lokasi tidak ditemukan.');
+                return;
+            }
             lokasiData.forEach(lokasi => {
                 const option = document.createElement('option');
                 option.value = lokasi.lokasi_id;
@@ -235,6 +241,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     await fetchConcerts();
+    await fetchLokasi(); // Panggil fetchLokasi di sini
 
     document.querySelector('.close').addEventListener('click', () => {
         document.getElementById('edit-modal').style.display = 'none';
