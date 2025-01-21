@@ -419,3 +419,28 @@ body {
 .modal-content form button:hover {
     background-color: #218838;
 }
+
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.dropdown-container select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    appearance: none;
+    background-color: white;
+}
+
+.dropdown-container i {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none; /* Ikon tidak dapat diklik */
+    color: #888;
+}
+
