@@ -146,7 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         console.log('FormData:', [...formData.entries()]); // Log semua data yang akan dikirim
 
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch('http://localhost:5000/api/konser', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`, // Gunakan header Authorization
