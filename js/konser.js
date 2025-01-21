@@ -45,12 +45,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <option value="rejected" ${concert.status === 'rejected' ? 'selected' : ''}>Rejected</option>
                         </select>
                     </div>
+                    <div class="concert-image">
+                        <img src="${concert.image}" alt="Gambar konser ${concert.nama_konser}" />
+                    </div>
                     <div class="concert-details">
+                        <p><strong>Lokasi:</strong> ${concert.lokasi_name}</p>
                         <p><strong>Tanggal:</strong> ${formattedDate}</p>
                         <p><strong>Jumlah Tiket:</strong> ${concert.jumlah_tiket}</p>
                         <p><strong>Harga:</strong> Rp ${concert.harga.toLocaleString('id-ID')}</p>
-                        <p><strong>Bank:</strong> ${concert.jenis_bank}</p>
-                        <p><strong>Atas Nama:</strong> ${concert.atas_nama}</p>
+                        <p><strong>Nama Penyelenggara:</strong> ${concert.user_name}</p>
                     </div>
                     <div class="concert-actions">
                         <button class="btn edit" data-id="${concert.id}"><i class="fas fa-edit"></i>Edit</button>
@@ -79,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Open modal
     addConcertBtn.addEventListener("click", () => {
-        addConcertModal.style.display = "block";
+        addConcertModal.classList.add("show"); // Menambahkan class 'show' untuk menampilkan modal
     });
 
     // Close modal
