@@ -374,6 +374,16 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.modal-content form select {
+    width: 95%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    appearance: none; /* Opsional: untuk tampilan dropdown yang seragam */
+}
+
 .modal-content h2 {
     margin-top: 0;
     text-align: center;

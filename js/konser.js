@@ -158,15 +158,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Event listeners
     document.getElementById('add-concert-form').addEventListener('submit', addConcert);
 
-    // Handle form submission (optional)
-    const addConcertForm = document.getElementById("add-concert-form");
-    addConcertForm.addEventListener("submit", (e) => {
-        e.preventDefault();
-        alert("Konser berhasil ditambahkan!");
-        addConcertModal.style.display = "none";
-        addConcertForm.reset();
-    });
-
     async function openEditModal(concertId) {
         if (!concertId) {
             alert('Terjadi kesalahan, ID konser tidak ditemukan.');
