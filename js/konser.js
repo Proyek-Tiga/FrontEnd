@@ -129,12 +129,18 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const formData = new FormData();
         formData.append('nama_konser', document.getElementById('concert-name').value);
-        formData.append('tanggal_konser', document.getElementById('concert-date').value);
+        const rawDate = document.getElementById('concert-date').value;
+        const formattedDate = new Date(rawDate).toISOString(); // Konversi tanggal ke ISO format
+        formData.append('tanggal_konser', formattedDate);
         formData.append('lokasi_id', document.getElementById('concert-location').value);
         formData.append('harga', document.getElementById('ticket-price').value);
+
         const imageInput = document.getElementById('concert-image');
         if (imageInput.files[0]) {
             formData.append('image', imageInput.files[0]);
+        } else {
+            alert('Harap unggah gambar konser.');
+            return;
         }
 
         try {
