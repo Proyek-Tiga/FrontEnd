@@ -136,12 +136,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         formData.append('harga', document.getElementById('ticket-price').value);
 
         const imageInput = document.getElementById('concert-image');
-        if (imageInput.files[0]) {
+        if (imageInput.files.length > 0) {
             formData.append('image', imageInput.files[0]);
         } else {
             alert('Harap unggah gambar konser.');
             return;
         }
+
+        console.log('FormData:', [...formData.entries()]); // Log semua data yang akan dikirim
 
         try {
             const response = await fetch(API_URL, {
@@ -151,15 +153,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
                 body: formData,
             });
-            if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-            alert('Konser berhasil ditambahkan!');
-            document.getElementById('add-concert-form').reset();
-            document.getElementById('add-concert-modal').style.display = 'none';
-            // Refresh concert list
-            fetchConcerts();
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Konser berhasil ditambahkan:', data);
+                alert('Konser berhasil ditambahkan!');
+                document.getElementById('add-concert-form').reset();
+                document.getElementById('add-concert-modal').style.display = 'none';
+                // Refresh concert list
+                fetchConcerts();
+            } else {
+                const errorData = await response.json();
+                console.error('Error response:', errorData);
+                alert(`Gagal menambahkan konser: ${errorData.message || 'Error tidak diketahui.'}`);
+            }
         } catch (error) {
             console.error('Error adding concert:', error);
-            alert('Gagal menambahkan konser.');
+            alert('Gagal menambahkan konser. Silakan coba lagi.');
         }
     }
 
