@@ -128,43 +128,65 @@ document.addEventListener('DOMContentLoaded', async () => {
         event.preventDefault();
 
         const formData = new FormData();
-        formData.append('nama_konser', document.getElementById('concert-name').value);
+        const concertName = document.getElementById('concert-name').value;
         const rawDate = document.getElementById('concert-date').value;
-        const formattedDate = new Date(rawDate).toISOString(); // Konversi tanggal ke ISO format
-        formData.append('tanggal_konser', formattedDate);
-        formData.append('lokasi_id', document.getElementById('concert-location').value);
-        formData.append('harga', document.getElementById('ticket-price').value);
-
+        const locationId = document.getElementById('concert-location').value;
+        const ticketPrice = document.getElementById('ticket-price').value;
         const imageInput = document.getElementById('concert-image');
-        if (imageInput.files.length > 0) {
-            formData.append('image', imageInput.files[0]);
-        } else {
+
+        // Validasi input
+        if (!concertName) {
+            alert('Harap masukkan nama konser.');
+            return;
+        }
+        if (!rawDate) {
+            alert('Harap masukkan tanggal konser.');
+            return;
+        }
+        if (!locationId) {
+            alert('Harap pilih lokasi konser.');
+            return;
+        }
+        if (!ticketPrice || isNaN(ticketPrice)) {
+            alert('Harap masukkan harga tiket yang valid.');
+            return;
+        }
+        if (imageInput.files.length === 0) {
             alert('Harap unggah gambar konser.');
             return;
         }
 
-        console.log('FormData:', [...formData.entries()]); // Log semua data yang akan dikirim
+        // Tambahkan data ke FormData
+        formData.append('nama_konser', concertName);
+        formData.append('tanggal_konser', new Date(rawDate).toISOString());
+        formData.append('lokasi_id', locationId);
+        formData.append('harga', ticketPrice);
+        formData.append('image', imageInput.files[0]);
+
+        console.log('FormData:', [...formData.entries()]);
 
         try {
             const response = await fetch('http://localhost:5000/api/konser', {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // Gunakan header Authorization
+                    'Authorization': `Bearer ${token}`, // Token harus valid
                 },
                 body: formData,
             });
+
+            const responseText = await response.text(); // Ambil respon mentah
+            console.log('Response text:', responseText);
+
             if (response.ok) {
-                const data = await response.json();
+                const data = JSON.parse(responseText); // Parse respons jika JSON valid
                 console.log('Konser berhasil ditambahkan:', data);
                 alert('Konser berhasil ditambahkan!');
                 document.getElementById('add-concert-form').reset();
                 document.getElementById('add-concert-modal').style.display = 'none';
-                // Refresh concert list
-                fetchConcerts();
+                fetchConcerts(); // Refresh daftar konser
             } else {
-                const errorData = await response.json();
-                console.error('Error response:', errorData);
-                alert(`Gagal menambahkan konser: ${errorData.message || 'Error tidak diketahui.'}`);
+                console.error('Error response:', responseText);
+                alert(`Gagal menambahkan konser: ${responseText}`);
             }
         } catch (error) {
             console.error('Error adding concert:', error);
