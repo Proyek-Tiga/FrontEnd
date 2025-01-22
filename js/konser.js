@@ -87,13 +87,16 @@ document.addEventListener('DOMContentLoaded', async () => {
                 container.appendChild(concertCard);
             });
 
-            container.querySelectorAll('.btn.edit').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    const concertId = e.target.closest('button').dataset.id;
+            container.querySelectorAll('.status-dropdown').forEach(dropdown => {
+                dropdown.addEventListener('change', (e) => {
+                    const concertId = e.target.dataset.id; // Ambil data-id dari dropdown
+                    const newStatus = e.target.value; // Ambil nilai status baru
+                    console.log('Concert ID:', concertId, 'New Status:', newStatus);
+
                     if (concertId) {
-                        openEditModal(concertId);
+                        updateConcertStatus(concertId, newStatus); // Panggil fungsi update
                     } else {
-                        console.error('Concert ID tidak ditemukan pada tombol.');
+                        console.error('Concert ID tidak ditemukan pada dropdown.');
                     }
                 });
             });
@@ -224,7 +227,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('add-concert-form').addEventListener('submit', addConcert);
 
     async function updateConcertStatus(concertId, newStatus) {
-        console.log('Updating concert status:', { concertId, newStatus }); // Log data sebelum permintaan
+        if (!concertId) {
+            console.error('Concert ID is undefined. Cannot update status.');
+            return;
+        }
+    
+        console.log('Updating concert status:', { concertId, newStatus });
+
         try {
             const response = await fetch(`https://tiket-backend-theta.vercel.app/api/konser/${concertId}/status`, {
                 method: 'PUT',
