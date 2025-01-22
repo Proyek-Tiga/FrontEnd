@@ -445,3 +445,11 @@ body {
     color: #888;
 }
 
+.concert-image img {
+    max-width: 100%;
+    height: auto; /* Menjaga proporsi gambar */
+    display: block;
+    margin: 0 auto; /* Memposisikan gambar di tengah */
+}
+
+
