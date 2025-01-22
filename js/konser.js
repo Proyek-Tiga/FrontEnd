@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <p><strong>Nama Penyelenggara:</strong> ${concert.user_name}</p>
                     </div>
                     <div class="concert-actions">
-                        <button class="btn edit" data-id="${concert.id}"><i class="fas fa-edit"></i>Edit</button>
+                        <button class="btn edit" data-id="${concert.konser_id}"><i class="fas fa-edit"></i>Edit</button>
                         <button class="btn delete"><i class="fas fa-trash"></i>Hapus</button>
                     </div>
                 `;
@@ -92,6 +92,30 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const newStatus = e.target.value;
                     if (concertId && newStatus) {
                         await updateConcertStatus(concertId, newStatus);
+                    }
+                });
+            });
+
+            container.querySelectorAll('.btn.edit').forEach(button => {
+                button.addEventListener('click', async (e) => {
+                    const concertId = button.getAttribute('data-id');
+                    try {
+                        const response = await fetch(`${API_URL}/${concertId}`, {
+                            headers: { 'Authorization': `Bearer ${token}` }
+                        });
+                        if (!response.ok) throw new Error('Gagal memuat data konser.');
+                        const concert = await response.json();
+
+                        document.getElementById('edit-concert-name').value = concert.nama_konser;
+                        document.getElementById('edit-concert-date').value = new Date(concert.tanggal_konser).toISOString().slice(0, 16);
+                        document.getElementById('edit-concert-location').value = concert.lokasi_id;
+                        document.getElementById('edit-ticket-price').value = concert.harga;
+
+                        editConcertModal.style.display = 'block';
+                        editConcertForm.setAttribute('data-id', concertId);
+                    } catch (error) {
+                        console.error(error);
+                        alert('Gagal memuat data konser.');
                     }
                 });
             });
@@ -267,38 +291,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const editConcertModal = document.getElementById("edit-concert-modal");
     const editConcertForm = document.getElementById("edit-concert-form");
     const editCloseModal = document.querySelector("#edit-concert-modal .close");
-
-    // Buka pop-up edit konser
-    document.querySelectorAll('.btn.edit').forEach(button => {
-        button.addEventListener('click', async (e) => {
-            const concertId = e.target.getAttribute('data-id');
-            try {
-                const response = await fetch(`${API_URL}/${concertId}`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Gagal memuat data konser.');
-                }
-
-                const concert = await response.json();
-
-                // Isi form edit dengan data konser
-                document.getElementById('edit-concert-name').value = concert.nama_konser;
-                document.getElementById('edit-concert-date').value = new Date(concert.tanggal_konser).toISOString().slice(0, 16);
-                document.getElementById('edit-concert-location').value = concert.lokasi_id;
-                document.getElementById('edit-ticket-price').value = concert.harga;
-
-                editConcertModal.style.display = 'block';
-                editConcertForm.setAttribute('data-id', concertId);
-            } catch (error) {
-                console.error(error);
-                alert('Gagal memuat data konser.');
-            }
-        });
-    });
 
     // Tutup pop-up edit konser
     editCloseModal.addEventListener('click', () => {
