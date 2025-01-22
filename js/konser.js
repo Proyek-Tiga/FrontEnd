@@ -115,6 +115,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                         document.getElementById('edit-concert-location').value = concert.lokasi_id;
                         document.getElementById('edit-ticket-price').value = concert.harga;
 
+                        // Tampilkan preview gambar
+                        const imagePreview = document.getElementById('edit-image-preview');
+                        if (imagePreview) {
+                            imagePreview.src = concert.image;
+                            imagePreview.style.display = 'block';
+                        }
+
                         editConcertModal.classList.add('show');
                         editConcertForm.setAttribute('data-id', concertId);
                     } catch (error) {
@@ -338,6 +345,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    document.getElementById('edit-concert-image').addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('edit-image-preview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    
     // Muat daftar lokasi ke dropdown
     async function loadLocations() {
         try {
