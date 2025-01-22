@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 concertCard.innerHTML = `
                     <div class="concert-header">
                         <h3>${concert.nama_konser}</h3>
-                        <select class="status-dropdown">
+                        <select class="status-dropdown" data-id="${concert.id}">
                             <option value="approved" ${concert.status === 'approved' ? 'selected' : ''}>Approved</option>
                             <option value="pending" ${concert.status === 'pending' ? 'selected' : ''}>Pending</option>
                             <option value="rejected" ${concert.status === 'rejected' ? 'selected' : ''}>Rejected</option>
@@ -232,14 +232,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                 },
                 body: JSON.stringify({ status: newStatus }),
             });
-    
+
             if (!response.ok) {
                 const errorText = await response.text();
                 console.error('Gagal mengubah status konser:', errorText);
                 alert(`Gagal mengubah status konser: ${errorText}`);
                 return;
             }
-    
+
             const responseData = await response.json();
             console.log('Status konser berhasil diubah:', responseData);
             alert('Status konser berhasil diubah!');
@@ -249,21 +249,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Gagal mengubah status konser. Silakan coba lagi.');
         }
     }
-    
+
     // Event delegation untuk dropdown status
     document.querySelector('.card-container').addEventListener('change', (event) => {
         if (event.target.classList.contains('status-dropdown')) {
-            const concertCard = event.target.closest('.concert-card');
-            const concertId = concertCard.querySelector('.btn.edit')?.dataset.id;
-            const newStatus = event.target.value;
-    
+            const dropdown = event.target;
+            const concertId = dropdown.getAttribute('data-id'); // Ambil ID dari data-id
+            const newStatus = dropdown.value; // Ambil nilai status baru dari dropdown
+
             if (concertId) {
                 updateConcertStatus(concertId, newStatus);
             } else {
                 console.error('Concert ID tidak ditemukan.');
+                alert('Gagal menemukan ID konser. Silakan coba lagi.');
             }
         }
-    });    
+    });
 
     await fetchConcerts();
     await fetchLokasi(); // Panggil fetchLokasi di sini
