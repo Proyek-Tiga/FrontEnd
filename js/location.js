@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Event Listener: Tampilkan pop-up tambah lokasi
     btnTambahKonser.addEventListener('click', () => {
-        popupTambahKonser.style.display = 'block';
+        popupTambahKonser.classList.add("show"); // Menambahkan class 'show' untuk menampilkan modal
     });
 
     // Event Listener: Sembunyikan pop-up saat klik "Batal"
