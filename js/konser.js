@@ -49,11 +49,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.querySelectorAll('.concert-card').forEach(card => card.remove());
 
             concerts.forEach(concert => {
-                if (!concert.id) {
-                    console.error('Concert data is missing an ID:', concert);
-                    return;
-                }
-                console.log('Concert ID:', concert.id, 'Concert Name:', concert.nama_konser);
                 const concertCard = document.createElement('div');
                 concertCard.classList.add('concert-card');
 
