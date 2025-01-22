@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.querySelectorAll('.btn.edit').forEach(button => {
                 button.addEventListener('click', async (e) => {
                     const concertId = button.getAttribute('data-id');
+                    console.log(`Fetching details for concert ID: ${concertId}`);
                     try {
                         const response = await fetch(`${API_URL}/${concertId}`, {
                             headers: { 'Authorization': `Bearer ${token}` }
