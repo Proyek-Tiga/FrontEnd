@@ -6,6 +6,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         alert('Token tidak ditemukan. Harap login ulang.');
         return;
     }
+
+    // Dekode token untuk mendapatkan user_id
+    function decodeToken(token) {
+        try {
+            const payloadBase64 = token.split('.')[1];
+            const decodedPayload = JSON.parse(atob(payloadBase64));
+            return decodedPayload.user_id;
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return null;
+        }
+    }
+
+    const userId = decodeToken(token);
+    if (!userId) {
+        alert('Gagal mendapatkan user_id dari token. Harap login ulang.');
+        return;
+    }
+
+    console.log('Decoded user_id:', userId);
+
     const addConcertBtn = document.getElementById("add-concert-btn");
     const addConcertModal = document.getElementById("add-concert-modal");
     const closeModal = document.querySelector("#add-concert-modal .close");
@@ -165,6 +186,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         formData.append('lokasi_id', locationId);
         formData.append('harga', ticketPrice);
         formData.append('image', imageInput.files[0]);
+        formData.append('user_id', userId); // Tambahkan user_id ke FormData
 
         console.log('FormData:', [...formData.entries()]);
 
