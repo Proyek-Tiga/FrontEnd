@@ -264,6 +264,118 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
+    const editConcertModal = document.getElementById("edit-concert-modal");
+    const editConcertForm = document.getElementById("edit-concert-form");
+    const editCloseModal = document.querySelector("#edit-concert-modal .close");
+
+    // Buka pop-up edit konser
+    document.querySelectorAll('.btn.edit').forEach(button => {
+        button.addEventListener('click', async (e) => {
+            const concertId = e.target.getAttribute('data-id');
+            try {
+                const response = await fetch(`${API_URL}/${concertId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Gagal memuat data konser.');
+                }
+
+                const concert = await response.json();
+
+                // Isi form edit dengan data konser
+                document.getElementById('edit-concert-name').value = concert.nama_konser;
+                document.getElementById('edit-concert-date').value = new Date(concert.tanggal_konser).toISOString().slice(0, 16);
+                document.getElementById('edit-concert-location').value = concert.lokasi_id;
+                document.getElementById('edit-ticket-price').value = concert.harga;
+
+                editConcertModal.style.display = 'block';
+                editConcertForm.setAttribute('data-id', concertId);
+            } catch (error) {
+                console.error(error);
+                alert('Gagal memuat data konser.');
+            }
+        });
+    });
+
+    // Tutup pop-up edit konser
+    editCloseModal.addEventListener('click', () => {
+        editConcertModal.style.display = 'none';
+    });
+
+    // Simpan perubahan konser
+    editConcertForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const concertId = editConcertForm.getAttribute('data-id');
+        const formData = new FormData(editConcertForm);
+        const updatedConcert = {
+            nama_konser: formData.get('concert_name'),
+            tanggal_konser: formData.get('concert_date'),
+            lokasi_id: formData.get('concert_location'),
+            harga: parseInt(formData.get('ticket_price'), 10),
+        };
+
+        // Tambahkan gambar jika ada file baru yang dipilih
+        const concertImage = formData.get('concert_image');
+        if (concertImage.size > 0) {
+            updatedConcert.image = concertImage;
+        }
+
+        try {
+            const response = await fetch(`${API_URL}/${concertId}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedConcert),
+            });
+
+            if (!response.ok) {
+                throw new Error('Gagal mengupdate data konser.');
+            }
+
+            alert('Konser berhasil diperbarui!');
+            editConcertModal.style.display = 'none';
+            await fetchConcerts(); // Refresh daftar konser
+        } catch (error) {
+            console.error(error);
+            alert('Gagal mengupdate konser.');
+        }
+    });
+
+    // Muat daftar lokasi ke dropdown
+    async function loadLocations() {
+        try {
+            const response = await fetch(API_LOKASI, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Gagal memuat lokasi.');
+            }
+
+            const locations = await response.json();
+            const locationDropdown = document.getElementById('edit-concert-location');
+            locationDropdown.innerHTML = '<option value="" disabled selected>Pilih Lokasi</option>';
+
+            locations.forEach(location => {
+                const option = document.createElement('option');
+                option.value = location.id;
+                option.textContent = location.nama_lokasi;
+                locationDropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    await loadLocations();
     await fetchConcerts();
     await fetchLokasi(); // Panggil fetchLokasi di sini
 });
