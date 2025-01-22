@@ -254,14 +254,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.querySelector('.card-container').addEventListener('change', (event) => {
         if (event.target.classList.contains('status-dropdown')) {
             const dropdown = event.target;
-            const concertId = dropdown.getAttribute('data-id'); // Ambil ID dari data-id
-            const newStatus = dropdown.value; // Ambil nilai status baru dari dropdown
+            const concertId = dropdown.dataset.id;
+            const newStatus = dropdown.value;
 
             if (concertId) {
+                console.log('Updating concert status:', { concertId, newStatus });
                 updateConcertStatus(concertId, newStatus);
             } else {
-                console.error('Concert ID tidak ditemukan.');
-                alert('Gagal menemukan ID konser. Silakan coba lagi.');
+                console.error('Concert ID tidak ditemukan pada dropdown.');
             }
         }
     });
