@@ -93,13 +93,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 dropdown.addEventListener('change', (e) => {
                     const concertId = e.target.getAttribute('data-id'); // Gunakan getAttribute
                     const newStatus = e.target.value; // Ambil nilai status baru
-                    console.log('Concert ID:', concertId, 'New Status:', newStatus);
-
-                    if (concertId) {
-                        updateConcertStatus(concertId, newStatus); // Panggil fungsi update
-                    } else {
+                    if (!concertId) {
                         console.error('Concert ID tidak ditemukan pada dropdown.');
+                        return;
                     }
+                    console.log('Concert ID:', concertId, 'New Status:', newStatus);
+                    updateConcertStatus(concertId, newStatus); // Panggil fungsi update
                 });
             });
         } catch (error) {
@@ -233,7 +232,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('Concert ID or new status is invalid:', { concertId, newStatus });
             return;
         }
-    
+
         console.log('Updating concert status:', { concertId, newStatus });
 
         try {
