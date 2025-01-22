@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.querySelectorAll('.concert-card').forEach(card => card.remove());
 
             concerts.forEach(concert => {
-                console.log('Concert Data:', concert); // Tambahkan log ini
+                console.log('Concert ID:', concert.id, 'Concert Name:', concert.nama_konser);
                 const concertCard = document.createElement('div');
                 concertCard.classList.add('concert-card');
 
@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             container.querySelectorAll('.status-dropdown').forEach(dropdown => {
                 dropdown.addEventListener('change', (e) => {
-                    const concertId = e.target.dataset.id; // Ambil data-id dari dropdown
+                    const concertId = e.target.getAttribute('data-id'); // Gunakan getAttribute
                     const newStatus = e.target.value; // Ambil nilai status baru
                     console.log('Concert ID:', concertId, 'New Status:', newStatus);
 
@@ -229,8 +229,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('add-concert-form').addEventListener('submit', addConcert);
 
     async function updateConcertStatus(concertId, newStatus) {
-        if (!concertId) {
-            console.error('Concert ID is undefined. Cannot update status.');
+        if (!concertId || !newStatus) {
+            console.error('Concert ID or new status is invalid:', { concertId, newStatus });
             return;
         }
     
@@ -248,7 +248,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error('Gagal mengubah status konser:', errorText);
+                console.error('Error Response:', errorText);
                 alert(`Gagal mengubah status konser: ${errorText}`);
                 return;
             }
