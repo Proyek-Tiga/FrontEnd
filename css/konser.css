@@ -455,4 +455,14 @@ body {
     margin: 0 auto; /* Memposisikan gambar di tengah */
 }
 
+#edit-image-preview {
+    display: none;
+    max-width: 300px; /* atau sesuai kebutuhan */
+    max-height: 200px; /* batasi tinggi jika perlu */
+    border: 1px solid #ccc;
+    padding: 5px;
+    background-color: #f9f9f9;
+}
+
+
 

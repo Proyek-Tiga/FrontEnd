@@ -104,6 +104,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const concertId = button.getAttribute('data-id');
                     console.log(`Fetching details for concert ID: ${concertId}`);
                     try {
+                        // Panggil fungsi fetchLokasi untuk mengisi dropdown lokasi
+                        await fetchLokasi();
+
                         const response = await fetch(`${API_URL}/${concertId}`, {
                             headers: { 'Authorization': `Bearer ${token}` }
                         });
@@ -112,7 +115,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         document.getElementById('edit-concert-name').value = concert.nama_konser;
                         document.getElementById('edit-concert-date').value = new Date(concert.tanggal_konser).toISOString().slice(0, 16);
-                        document.getElementById('edit-concert-location').value = concert.lokasi_id;
+
+                        // Pastikan elemen dropdown memiliki ID yang sesuai
+                        const editLocationDropdown = document.getElementById('edit-concert-location');
+                        if (editLocationDropdown) {
+                            editLocationDropdown.value = concert.lokasi_id; // Set nilai lokasi
+                        }
+
                         document.getElementById('edit-ticket-price').value = concert.harga;
 
                         // Tampilkan preview gambar
@@ -347,15 +356,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     document.getElementById('edit-concert-image').addEventListener('change', (event) => {
         const file = event.target.files[0];
+        const preview = document.getElementById('edit-image-preview');
+
         if (file) {
             const reader = new FileReader();
-            reader.onload = (e) => {
-                document.getElementById('edit-image-preview').src = e.target.result;
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                preview.style.display = 'block'; // Tampilkan gambar
             };
+
             reader.readAsDataURL(file);
+        } else {
+            preview.src = '';
+            preview.style.display = 'none'; // Sembunyikan jika tidak ada file
         }
     });
-    
+
     // Muat daftar lokasi ke dropdown
     async function loadLocations() {
         try {
