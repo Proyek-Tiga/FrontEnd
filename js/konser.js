@@ -222,83 +222,49 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Event listeners
     document.getElementById('add-concert-form').addEventListener('submit', addConcert);
 
-    async function openEditModal(concertId) {
-        if (!concertId) {
-            alert('Terjadi kesalahan, ID konser tidak ditemukan.');
-            return;
-        }
-
+    async function updateConcertStatus(concertId, newStatus) {
         try {
-            const response = await fetch(`${API_URL}/${concertId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const concert = await response.json();
-
-            document.getElementById('concert-id').value = concert.id;
-            document.getElementById('nama_konser').value = concert.nama_konser;
-            document.getElementById('tanggal_konser').value = new Date(concert.tanggal_konser).toISOString().slice(0, 16);
-            document.getElementById('harga').value = concert.harga;
-            document.getElementById('image').value = concert.image || '';
-            document.getElementById('jenis_bank').value = concert.jenis_bank;
-            document.getElementById('atas_nama').value = concert.atas_nama;
-            document.getElementById('rekening').value = concert.rekening;
-
-            document.getElementById('edit-modal').style.display = 'block';
-        } catch (error) {
-            console.error('Error fetching concert details:', error);
-            alert('Gagal memuat data konser.');
-        }
-    }
-
-    document.getElementById('edit-form').addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const concertId = document.getElementById('concert-id').value;
-        const updatedData = {
-            id: concertId,
-            nama_konser: document.getElementById('nama_konser').value,
-            tanggal_konser: new Date(document.getElementById('tanggal_konser').value).toISOString(),
-            harga: parseInt(document.getElementById('harga').value, 10),
-            image: document.getElementById('image').value,
-            jenis_bank: document.getElementById('jenis_bank').value,
-            atas_nama: document.getElementById('atas_nama').value,
-            rekening: document.getElementById('rekening').value
-        };
-
-        try {
-            const response = await fetch(`${API_URL}/${concertId}`, {
+            const response = await fetch(`https://tiket-backend-theta.vercel.app/api/konser/${concertId}/status`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`,
                 },
-                body: JSON.stringify(updatedData)
+                body: JSON.stringify({ status: newStatus }),
             });
-
+    
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                const errorText = await response.text();
+                console.error('Gagal mengubah status konser:', errorText);
+                alert(`Gagal mengubah status konser: ${errorText}`);
+                return;
             }
-
-            alert('Konser berhasil diperbarui.');
-            document.getElementById('edit-modal').style.display = 'none';
-            await fetchConcerts();
+    
+            const responseData = await response.json();
+            console.log('Status konser berhasil diubah:', responseData);
+            alert('Status konser berhasil diubah!');
+            fetchConcerts(); // Refresh daftar konser
         } catch (error) {
-            console.error('Error updating concert:', error);
-            alert('Terjadi kesalahan saat memperbarui konser.');
+            console.error('Error updating concert status:', error);
+            alert('Gagal mengubah status konser. Silakan coba lagi.');
         }
-    });
+    }
+    
+    // Event delegation untuk dropdown status
+    document.querySelector('.card-container').addEventListener('change', (event) => {
+        if (event.target.classList.contains('status-dropdown')) {
+            const concertCard = event.target.closest('.concert-card');
+            const concertId = concertCard.querySelector('.btn.edit')?.dataset.id;
+            const newStatus = event.target.value;
+    
+            if (concertId) {
+                updateConcertStatus(concertId, newStatus);
+            } else {
+                console.error('Concert ID tidak ditemukan.');
+            }
+        }
+    });    
 
     await fetchConcerts();
     await fetchLokasi(); // Panggil fetchLokasi di sini
-
-    document.querySelector('.close').addEventListener('click', () => {
-        document.getElementById('edit-modal').style.display = 'none';
-    });
 });

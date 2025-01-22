@@ -258,6 +258,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    width: 20%;
 }
 
 .concert-header {
@@ -288,7 +289,7 @@ body {
 
 .concert-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     gap: 10px;
     margin-top: 20px;
 }
