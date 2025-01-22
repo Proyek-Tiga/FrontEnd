@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.querySelectorAll('.concert-card').forEach(card => card.remove());
 
             concerts.forEach(concert => {
+                console.log('Concert ID:', concert.id); // Log ID konser untuk debugging
                 const concertCard = document.createElement('div');
                 concertCard.classList.add('concert-card');
 
@@ -223,6 +224,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('add-concert-form').addEventListener('submit', addConcert);
 
     async function updateConcertStatus(concertId, newStatus) {
+        console.log('Updating concert status:', { concertId, newStatus }); // Log data sebelum permintaan
         try {
             const response = await fetch(`https://tiket-backend-theta.vercel.app/api/konser/${concertId}/status`, {
                 method: 'PUT',
@@ -253,15 +255,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Event delegation untuk dropdown status
     document.querySelector('.card-container').addEventListener('change', (event) => {
         if (event.target.classList.contains('status-dropdown')) {
-            const dropdown = event.target;
-            const concertId = dropdown.dataset.id;
-            const newStatus = dropdown.value;
+            const concertId = event.target.dataset.id; // Ambil ID dari data-id
+            const newStatus = event.target.value; // Ambil nilai status baru
 
             if (concertId) {
-                console.log('Updating concert status:', { concertId, newStatus });
                 updateConcertStatus(concertId, newStatus);
             } else {
-                console.error('Concert ID tidak ditemukan pada dropdown.');
+                console.error('Concert ID tidak ditemukan untuk dropdown status.');
+                alert('Gagal menemukan ID konser. Silakan coba lagi.');
             }
         }
     });
