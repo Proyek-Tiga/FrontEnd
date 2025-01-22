@@ -366,6 +366,7 @@ body {
 .modal.show {
     visibility: visible;
     opacity: 1;
+    display: flex;
 }
 
 .modal-content {

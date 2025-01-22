@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    const editConcertModal = document.getElementById("edit-concert-modal");
+    const editConcertForm = document.getElementById("edit-concert-form");
+    const editCloseModal = document.querySelector("#edit-concert-modal .close");
     const API_URL = 'https://tiket-backend-theta.vercel.app/api/konser';
     const API_LOKASI = 'https://tiket-backend-theta.vercel.app/api/lokasi';
     const token = localStorage.getItem("authToken");
@@ -112,7 +115,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         document.getElementById('edit-concert-location').value = concert.lokasi_id;
                         document.getElementById('edit-ticket-price').value = concert.harga;
 
-                        editConcertModal.style.display = 'block';
+                        editConcertModal.classList.add('show');
                         editConcertForm.setAttribute('data-id', concertId);
                     } catch (error) {
                         console.error(error);
@@ -125,6 +128,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Gagal memuat data konser.');
         }
     }
+
+    editCloseModal.addEventListener('click', () => {
+        editConcertModal.classList.remove('show');
+    });
 
     // Open modal
     addConcertBtn.addEventListener("click", () => {
@@ -287,15 +294,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 alert('Gagal menemukan ID konser. Silakan coba lagi.');
             }
         }
-    });
-
-    const editConcertModal = document.getElementById("edit-concert-modal");
-    const editConcertForm = document.getElementById("edit-concert-form");
-    const editCloseModal = document.querySelector("#edit-concert-modal .close");
-
-    // Tutup pop-up edit konser
-    editCloseModal.addEventListener('click', () => {
-        editConcertModal.style.display = 'none';
     });
 
     // Simpan perubahan konser
