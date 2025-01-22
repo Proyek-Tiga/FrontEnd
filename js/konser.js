@@ -44,8 +44,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const concerts = await response.json();
-            console.log('API Response:', concerts);
-
             const container = document.querySelector('.card-container');
 
             container.querySelectorAll('.concert-card').forEach(card => card.remove());
@@ -68,7 +66,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 concertCard.innerHTML = `
                     <div class="concert-header">
                         <h3>${concert.nama_konser}</h3>
-                        <select class="status-dropdown" data-id="${concert.id}">
+                        <select class="status-dropdown" data-id="${concert.konser_id}">
                             <option value="approved" ${concert.status === 'approved' ? 'selected' : ''}>Approved</option>
                             <option value="pending" ${concert.status === 'pending' ? 'selected' : ''}>Pending</option>
                             <option value="rejected" ${concert.status === 'rejected' ? 'selected' : ''}>Rejected</option>
@@ -94,15 +92,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             container.querySelectorAll('.status-dropdown').forEach(dropdown => {
-                dropdown.addEventListener('change', (e) => {
-                    const concertId = e.target.getAttribute('data-id'); // Gunakan getAttribute
-                    const newStatus = e.target.value; // Ambil nilai status baru
-                    if (!concertId) {
-                        console.error('Concert ID tidak ditemukan pada dropdown.');
-                        return;
+                dropdown.addEventListener('change', async (e) => {
+                    const concertId = e.target.getAttribute('data-id');
+                    const newStatus = e.target.value;
+                    if (concertId && newStatus) {
+                        await updateConcertStatus(concertId, newStatus);
                     }
-                    console.log('Concert ID:', concertId, 'New Status:', newStatus);
-                    updateConcertStatus(concertId, newStatus); // Panggil fungsi update
                 });
             });
         } catch (error) {
