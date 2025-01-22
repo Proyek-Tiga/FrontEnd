@@ -44,12 +44,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             const concerts = await response.json();
+            console.log('API Response:', concerts);
+
             const container = document.querySelector('.card-container');
 
             container.querySelectorAll('.concert-card').forEach(card => card.remove());
 
             concerts.forEach(concert => {
-                console.log('Concert ID:', concert.id); // Log ID konser untuk debugging
+                console.log('Concert Data:', concert); // Tambahkan log ini
                 const concertCard = document.createElement('div');
                 concertCard.classList.add('concert-card');
 
