@@ -49,10 +49,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.querySelectorAll('.concert-card').forEach(card => card.remove());
 
             concerts.forEach(concert => {
-                if (!concert.id) {
-                    console.warn('Concert ID missing:', concert);
-                    return; // Lewati jika ID tidak ada
-                }                
+                console.log('Concert ID:', concert.id); // Log ID konser untuk debugging
                 const concertCard = document.createElement('div');
                 concertCard.classList.add('concert-card');
 
@@ -93,7 +90,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.querySelectorAll('.status-dropdown').forEach(dropdown => {
                 dropdown.addEventListener('change', (e) => {
                     const concertId = e.target.dataset.id; // Ambil data-id dari dropdown
-                    console.log('Dropdown changed. Data-ID:', concertId);
                     const newStatus = e.target.value; // Ambil nilai status baru
                     console.log('Concert ID:', concertId, 'New Status:', newStatus);
 
@@ -231,9 +227,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('add-concert-form').addEventListener('submit', addConcert);
 
     async function updateConcertStatus(concertId, newStatus) {
-        if (!concertId || concertId === 'undefined') {
-            console.error('Concert ID is invalid:', concertId);
-            alert('ID konser tidak valid. Tidak dapat mengubah status.');
+        if (!concertId) {
+            console.error('Concert ID is undefined. Cannot update status.');
             return;
         }
     
