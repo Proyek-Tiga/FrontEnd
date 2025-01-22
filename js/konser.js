@@ -112,6 +112,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.error('Dropdown lokasi tidak ditemukan.');
                 return;
             }
+            // Reset dropdown sebelum menambahkan opsi
+            lokasiDropdown.innerHTML = '<option value="">Pilih Lokasi</option>';
+
             lokasiData.forEach(lokasi => {
                 const option = document.createElement('option');
                 option.value = lokasi.lokasi_id;
@@ -143,7 +146,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Harap masukkan tanggal konser.');
             return;
         }
-        if (!locationId) {
+        if (!locationId || locationId === "") {
             alert('Harap pilih lokasi konser.');
             return;
         }
