@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const lokasiData = await response.json();
             console.log('Data Lokasi:', lokasiData); // Tambahkan log di sini
 
-            const lokasiDropdown = document.getElementById('concert-location');
+            const lokasiDropdown = document.getElementById('edit-concert-location');
             if (!lokasiDropdown) {
                 console.error('Dropdown lokasi tidak ditemukan.');
                 return;
