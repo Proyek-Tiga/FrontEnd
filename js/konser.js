@@ -318,17 +318,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const concertId = editConcertForm.getAttribute('data-id');
         const formData = new FormData(editConcertForm);
-        const updatedConcert = {
-            nama_konser: formData.get('concert_name'),
-            tanggal_konser: formData.get('concert_date'),
-            lokasi_id: formData.get('concert_location'),
-            harga: parseInt(formData.get('ticket_price'), 10),
-        };
 
-        // Tambahkan gambar jika ada file baru yang dipilih
-        const concertImage = formData.get('concert_image');
-        if (concertImage.size > 0) {
-            updatedConcert.image = concertImage;
+        // Ambil data dari form
+        formData.append('nama_konser', document.getElementById('edit-concert-name').value);
+        formData.append('tanggal_konser', new Date(document.getElementById('edit-concert-date').value).toISOString());
+        formData.append('lokasi_id', document.getElementById('edit-concert-location').value);
+        formData.append('harga', document.getElementById('edit-ticket-price').value);
+
+        // Periksa apakah ada file gambar baru yang dipilih
+        const concertImage = document.getElementById('edit-concert-image').files[0];
+        if (concertImage) {
+            formData.append('image', concertImage);
         }
 
         try {
@@ -336,17 +336,18 @@ document.addEventListener('DOMContentLoaded', async () => {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(updatedConcert),
+                body: formData,
             });
 
             if (!response.ok) {
+                const errorMessage = await response.text();
+            console.error('Response Error:', errorMessage);
                 throw new Error('Gagal mengupdate data konser.');
             }
 
             alert('Konser berhasil diperbarui!');
-            editConcertModal.style.display = 'none';
+            editConcertModal.classList.remove('show');
             await fetchConcerts(); // Refresh daftar konser
         } catch (error) {
             console.error(error);
