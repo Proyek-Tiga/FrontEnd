@@ -330,14 +330,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         formData.append('lokasi_id', document.getElementById('edit-concert-location').value);
         formData.append('harga', document.getElementById('edit-ticket-price').value);
 
-        // Cek apakah gambar baru diunggah, jika tidak, kirimkan gambar lama
+        // Cek apakah gambar baru diunggah, jika tidak, gambar tidak dikirim
         const imageInput = document.getElementById('edit-concert-image');
-        if (imageInput.files.length === 0) {
-            // Kirimkan gambar lama (gambarnya tidak berubah)
-            const imagePreview = document.getElementById('edit-image-preview');
-            formData.append('image', imagePreview.src); // Menggunakan gambar yang sudah ada
-        } else {
-            // Jika ada gambar baru, kirimkan gambar baru
+        if (imageInput.files.length > 0) {
+            // Jika ada gambar baru, tambahkan ke FormData
             formData.append('image', imageInput.files[0]);
         }
 
