@@ -317,7 +317,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         e.preventDefault();
 
         const concertId = editConcertForm.getAttribute('data-id');
+        if (!concertId || concertId === "") {
+            alert('Konser ID tidak valid.');
+            return;
+        }
         const formData = new FormData(editConcertForm);
+        formData.append('user_id', userId); // Pastikan user_id ditambahkan
 
         // Ambil data dari form
         formData.append('nama_konser', document.getElementById('edit-concert-name').value);
@@ -340,18 +345,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: formData,
             });
 
-            if (!response.ok) {
-                const errorMessage = await response.text();
-            console.error('Response Error:', errorMessage);
-                throw new Error('Gagal mengupdate data konser.');
+            if (response.ok) {
+                alert('Data konser berhasil diperbarui.');
+                fetchConcerts(); // Refresh data konser
+            } else {
+                const errorText = await response.text();
+                console.error('Update failed:', errorText);
+                alert('Gagal mengupdate data konser.');
             }
-
-            alert('Konser berhasil diperbarui!');
-            editConcertModal.classList.remove('show');
-            await fetchConcerts(); // Refresh daftar konser
         } catch (error) {
-            console.error(error);
-            alert('Gagal mengupdate konser.');
+            console.error('Error updating concert:', error);
+            alert('Terjadi kesalahan saat mengupdate data konser.');
         }
     });
 
