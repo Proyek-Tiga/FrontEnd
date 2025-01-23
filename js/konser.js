@@ -333,11 +333,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Cek apakah gambar baru diunggah
         const imageInput = document.getElementById('edit-concert-image');
         if (imageInput.files.length > 0) {
-            // Jika ada gambar baru, tambahkan ke FormData
             formData.append('image', imageInput.files[0]);
-        } else {
-            // Jika tidak ada gambar baru, kirimkan parameter khusus untuk gunakan gambar lama
-            formData.append('use_old_image', 'true'); // Menandakan tidak ada gambar baru
         }
 
         try {

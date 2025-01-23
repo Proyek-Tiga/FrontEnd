@@ -147,10 +147,21 @@
                 <div>
                     <label for="edit-image-preview">Preview Gambar:</label>
                     <img id="edit-image-preview" alt="Preview gambar konser" style="display: none;" />
-                </div>                
+                </div>
 
                 <button type="submit" class="btn submit">Simpan</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Pop-up Konfirmasi Hapus Konser -->
+    <div id="delete-concert-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Konfirmasi Hapus</h2>
+            <p>Apakah Anda yakin ingin menghapus konser ini?</p>
+            <button id="confirm-delete" class="btn danger">Hapus</button>
+            <button id="cancel-delete" class="btn">Batal</button>
         </div>
     </div>
 
