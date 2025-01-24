@@ -10,6 +10,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    const deleteConcertModal = document.getElementById("delete-concert-modal");
+    const confirmDeleteBtn = document.getElementById("confirm-delete");
+    const cancelDeleteBtn = document.getElementById("cancel-delete");
+    const closeModalBtn = document.querySelector("#delete-concert-modal .close");
+    let concertIdToDelete = null;
+
     // Dekode token untuk mendapatkan user_id
     function decodeToken(token) {
         try {
@@ -150,8 +156,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // Open modal
-    addConcertBtn.addEventListener("click", () => {
-        addConcertModal.classList.add("show"); // Menambahkan class 'show' untuk menampilkan modal
+    addConcertBtn.addEventListener("click", async () => {
+        await fetchLokasi(); // Pastikan dropdown lokasi terisi sebelum modal muncul
+        addConcertModal.classList.add("show");
     });
 
     // Close modal
@@ -175,19 +182,23 @@ document.addEventListener('DOMContentLoaded', async () => {
             const lokasiData = await response.json();
             console.log('Data Lokasi:', lokasiData); // Tambahkan log di sini
 
-            const lokasiDropdown = document.getElementById('edit-concert-location');
-            if (!lokasiDropdown) {
+            const editDropdown = document.getElementById('edit-concert-location');
+            const addDropdown = document.getElementById('concert-location'); // Dropdown di modal tambah konser
+
+            if (!editDropdown || !addDropdown) {
                 console.error('Dropdown lokasi tidak ditemukan.');
                 return;
             }
-            // Reset dropdown sebelum menambahkan opsi
-            lokasiDropdown.innerHTML = '<option value="">Pilih Lokasi</option>';
+            // Reset dropdown sebelum menambahkan opsi baru
+            editDropdown.innerHTML = '<option value="">Pilih Lokasi</option>';
+            addDropdown.innerHTML = '<option value="">Pilih Lokasi</option>';
 
             lokasiData.forEach(lokasi => {
                 const option = document.createElement('option');
                 option.value = lokasi.lokasi_id;
                 option.textContent = `${lokasi.lokasi} (Tiket: ${lokasi.tiket})`;
-                lokasiDropdown.appendChild(option);
+                editDropdown.appendChild(option.cloneNode(true));
+                addDropdown.appendChild(option);
             });
         } catch (error) {
             console.error('Error fetching lokasi:', error);
@@ -410,6 +421,49 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error(error);
         }
     }
+
+    document.querySelector('.card-container').addEventListener('click', (event) => {
+        if (event.target.closest('.btn.delete')) {
+            concertIdToDelete = event.target.closest('.concert-card').querySelector('.btn.edit').getAttribute('data-id');
+            deleteConcertModal.classList.add("show");
+        }
+    });
+
+    confirmDeleteBtn.addEventListener("click", async () => {
+        if (concertIdToDelete) {
+            try {
+                const response = await fetch(`${API_URL}/${concertIdToDelete}`, {
+                    method: "DELETE",
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Gagal menghapus konser. Status: ${response.status}`);
+                }
+
+                alert("Konser berhasil dihapus.");
+                deleteConcertModal.classList.remove("show");
+                concertIdToDelete = null;
+                await fetchConcerts(); // Memuat ulang daftar konser
+            } catch (error) {
+                console.error("Error menghapus konser:", error);
+                alert("Terjadi kesalahan saat menghapus konser.");
+            }
+        }
+    });
+
+    cancelDeleteBtn.addEventListener("click", () => {
+        deleteConcertModal.classList.remove("show");
+        concertIdToDelete = null;
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+        deleteConcertModal.classList.remove("show");
+        concertIdToDelete = null;
+    });
 
     await loadLocations();
     await fetchConcerts();
