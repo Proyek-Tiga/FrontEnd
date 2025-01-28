@@ -61,6 +61,7 @@
                 <!-- Table Section -->
                 <div class="table-container">
                     <h2>Data Permintaan Lokasi</h2>
+                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Permintaan</button>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -72,46 +73,7 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr id="row-1">
-                                <td>1</td>
-                                <td>Auditorium ULBI</td>
-                                <td>500</td>
-                                <td>
-                                    <ul>
-                                        <li>VIP - Rp 200,000</li>
-                                        <li>Reguler - Rp 100,000</li>
-                                    </ul>
-                                </td>
-                                <td id="status-1">Ditunda</td>
-                                <td>
-                                    <select onchange="updateStatus(1, this.value)">
-                                        <option value="Ditunda" selected>Ditunda</option>
-                                        <option value="Disetujui">Disetujui</option>
-                                        <option value="Ditolak">Ditolak</option>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr id="row-2">
-                                <td>2</td>
-                                <td>Balai Kota</td>
-                                <td>1,000</td>
-                                <td>
-                                    <ul>
-                                        <li>VIP - Rp 300,000</li>
-                                        <li>Reguler - Rp 150,000</li>
-                                    </ul>
-                                </td>
-                                <td id="status-2">Ditunda</td>
-                                <td>
-                                    <select onchange="updateStatus(2, this.value)">
-                                        <option value="Ditunda" selected>Ditunda</option>
-                                        <option value="Disetujui">Disetujui</option>
-                                        <option value="Ditolak">Ditolak</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </tbody>
+                        <tbody id="requestLokasiTableBody">
                     </table>
                 </div>
             </section>

@@ -15,8 +15,6 @@
 </head>
 
 <body>
-
-    <!-- COPYYY DARI SINII YAA -->
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar">
@@ -30,7 +28,7 @@
                 <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
-                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i> Penyelenggara</a>
+                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i> Penyelenggara</a>
                 <a href="transaksi.html" class="menu-item active"><i class="fas fa-receipt"></i> Transaksi</a>
                 <a href="tiket.html" class="menu-item"><i class="fas fa-ticket"></i> Tiket</a>
             </nav>
@@ -55,15 +53,14 @@
                             </li>
                         </ul>
                     </div>
-                </div> 
+                </div>
             </header>
-            <!-- SAMPAII SINI YAAA -->
 
-            <!-- KALAU BAGIANN SINIII INI DAH MASUK ISINYAA YAAAAA, KALAU BISA MASIH MENGGUNAKAN SECTION CLASSS YAAA -->
             <section class="content">
                 <!-- Table Section -->
                 <div class="table-container">
                     <h2>Data Transaksi</h2>
+                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Transaksi</button>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -105,45 +102,94 @@
                                     <button class="btn detail" data-id="2"><i class="fas fa-info-circle"></i></button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>TX12347</td>
-                                <td>2024-12-31</td>
-                                <td>Konser C</td>
-                                <td>Roni Saputra</td>
-                                <td>1</td>
-                                <td>Rp 100,000</td>
-                                <td><img src="qrcode3.png" alt="QR Code"></td>
-                                <td>
-                                    <button class="btn detail" data-id="3"><i class="fas fa-info-circle"></i></button>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- Modal E-Ticket -->
-            <div id="eticket-modal" class="modal">
-                <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <div class="eticket-container">
-                        <h2>E-Ticket</h2>
-                        <div class="eticket-details">
-                            <p><strong>No. Tiket:</strong> <span id="ticket-no"></span></p>
-                            <p><strong>Tanggal:</strong> <span id="ticket-date"></span></p>
-                            <p><strong>Nama Konser:</strong> <span id="concert-name"></span></p>
-                            <p><strong>Nama:</strong> <span id="buyer-name"></span></p>
-                            <p><strong>Jumlah Tiket:</strong> <span id="ticket-quantity"></span></p>
-                            <p><strong>Total:</strong> <span id="total-price"></span></p>
+            <!-- Pop-up Tambah Transaksi -->
+            <div class="popup" id="add-popup" style="display: none;">
+                <div class="popup-content">
+                    <h3>Tambah Transaksi</h3>
+                    <form id="add-form">
+                        <div class="popup-detail-item">
+                            <label for="add-tiket">No. Tiket:</label>
+                            <input type="text" id="add-tiket" required>
                         </div>
-                        <div class="qrcode-container">
-                            <img id="qrcode-img" src="" alt="QR Code">
+                        <div class="popup-detail-item">
+                            <label for="add-tanggal">Tanggal:</label>
+                            <input type="date" id="add-tanggal" required>
                         </div>
-                    </div>
+                        <div class="popup-detail-item">
+                            <label for="add-konser">Nama Konser:</label>
+                            <input type="text" id="add-konser" required>
+                        </div>
+                        <div class="popup-detail-item">
+                            <label for="add-nama">Nama:</label>
+                            <input type="text" id="add-nama" required>
+                        </div>
+                        <div class="popup-detail-item">
+                            <label for="add-jumlah">Jumlah Tiket:</label>
+                            <input type="number" id="add-jumlah" required>
+                        </div>
+                        <div class="popup-detail-item">
+                            <label for="add-total">Total:</label>
+                            <input type="text" id="add-total" required>
+                        </div>
+                        <div class="popup-actions">
+                            <button type="submit" class="btn simpan">Simpan</button>
+                            <button type="button" class="btn batal add-close-btn">Batal</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
+            <!-- Pop-up Edit Transaksi -->
+            <div id="edit-popup" class="popup" style="display: none;">
+                <div class="popup-content">
+                    <h3>Edit Transaksi</h3>
+                    <form id="edit-form">
+                        <div class="popup-detail-item">
+                            <label for="edit-tiket">No. Tiket:</label>
+                            <input type="text" id="edit-tiket" required>
+                        </div>
+                        <div class="popup-detail-item">
+                            <label for="edit-tanggal">Tanggal:</label>
+                            <input type="date" id="edit-tanggal" required>
+                        </div>
+                        <div class="popup-detail-item">
+                            <label for="edit-konser">Nama Konser:</label>
+                            <input type="text" id="edit-konser" required>
+                        </div>
+                        <div class="popup-detail-item">
+                            <label for="edit-nama">Nama:</label>
+                            <input type="text" id="edit-nama" required>
+                        </div>
+                        <div class="popup-detail-item">
+                            <label for="edit-jumlah">Jumlah Tiket:</label>
+                            <input type="number" id="edit-jumlah" required>
+                        </div>
+                        <div class="popup-detail-item">
+                            <label for="edit-total">Total:</label>
+                            <input type="text" id="edit-total" required>
+                        </div>
+                        <div class="popup-actions">
+                            <button type="submit" class="btn simpan">Simpan</button>
+                            <button type="button" class="btn batal close-btn">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Pop-up Konfirmasi Hapus Transaksi -->
+            <div id="delete-popup" class="popup" style="display: none;">
+                <div class="popup-content">
+                    <h2>Hapus Transaksi</h2>
+                    <p>Apakah Anda yakin ingin menghapus transaksi ini?</p>
+                    <button id="confirm-delete" class="btn">Ya, Hapus</button>
+                    <button id="cancel-delete" class="btn">Batal</button>
+                </div>
+            </div>
         </main>
     </div>
     <script src="js/transaksi.js"></script>
