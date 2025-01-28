@@ -31,7 +31,8 @@
                 <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
-                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i> Penyelenggara</a>
+                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i>
+                    Penyelenggara</a>
                 <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
                 <a href="tiket.html" class="menu-item active"><i class="fas fa-ticket"></i> Tiket</a>
             </nav>
@@ -56,7 +57,7 @@
                             </li>
                         </ul>
                     </div>
-                </div>                
+                </div>
             </header>
             <section class="content">
                 <!-- Table Section -->
@@ -75,63 +76,60 @@
                             </tr>
                         </thead>
                         <tbody id="tiketTableBody">
-                            <!-- Contoh Data -->
-                            <tr data-id="1">
-                                <td>1</td>
-                                <td>Tiket VIP</td>
-                                <td>500000</td>
-                                <td>Konser Musik</td>
-                                <td>100</td>
-                                <td>
-                                    <button class="btn edit" data-id="1" aria-label="Edit Tiket"><i class="fas fa-edit"></i></button>
-                                    <button class="btn delete" data-id="1" aria-label="Hapus Tiket"><i class="fas fa-trash"></i></button>
-                                </td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- Popup Form Tambah Tiket -->
+            <!-- Popup Form Tambah Tiket n class="btn edit" data-id="1" aria-->
             <div class="popup" id="popupTambahTiket" style="display: none;">
                 <div class="popup-content">
                     <h3>Tambah Tiket</h3>
                     <form id="formTambahTiket">
                         <label for="namaTiket">Nama Tiket:</label>
                         <input type="text" id="namaTiket" name="namaTiket" placeholder="Masukkan nama tiket" required>
-            
-                        <label for="hargaTiket">Harga:</label>
-                        <input type="number" id="hargaTiket" name="hargaTiket" placeholder="Masukkan harga tiket" required>
-            
-                        <label for="konser">Nama Konser:</label>
-                        <input type="text" id="konser" name="konser" placeholder="Masukkan nama konser" required>
+
+                        <label for="harga">Harga:</label>
+                        <input type="number" id="harga" name="harga" placeholder="Masukkan harga tiket" required>
+
+                        <label for="konser">Pilih Konser:</label>
+                        <select id="konser">
+                            <!-- <option value="">-- Pilih Konser --</option> -->
+
+                        </select>
 
                         <label for="jumlahTiket">Jumlah Tiket:</label>
-                        <input type="number" id="jumlahTiket" name="jumlahTiket" placeholder="Masukkan jumlah tiket" required>
-            
+                        <input type="number" id="jumlahTiket" name="jumlahTiket" placeholder="Masukkan jumlah tiket"
+                            required>
+
                         <div class="popup-actions">
-                            <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                            <button type="button" class="btn cancel" id="btnBatalTambahTiket" aria-label="Batal">Batal</button>
+                            <button class="btn save btn-submit" id="btn-submit" aria-label="Simpan">Simpan</button>
+                            <button type="button" class="btn cancel" id="btnBatalTambahTiket"
+                                aria-label="Batal">Batal</button>
                         </div>
                     </form>
                 </div>
             </div>
-            
-            <!-- Popup Form Edit Tiket -->
+
             <div id="popupEditTiket" class="popup" style="display: none;">
                 <div class="popup-content">
                     <h3>Edit Tiket</h3>
                     <form id="formEditTiket">
                         <input type="hidden" id="editTiketId">
+
                         <label for="editNamaTiket">Nama Tiket:</label>
                         <input type="text" id="editNamaTiket" required>
-                        
+
                         <label for="editHargaTiket">Harga:</label>
                         <input type="number" id="editHargaTiket" required>
-                        
-                        <label for="editKonser">Konser:</label>
-                        <input type="text" id="editKonser" required>
-                        
+
+                        <label for="editJumlahTiket">Jumlah Tiket:</label>
+                        <input type="number" id="editJumlahTiket" required>
+
+                        <label for="editKonser">Pilih Konser:</label>
+                        <select id="editKonser"></select>
+
                         <div class="popup-actions">
                             <button type="submit" class="btn">Simpan Perubahan</button>
                             <button type="button" id="btnBatalEditTiket" class="btn">Batal</button>
@@ -139,7 +137,7 @@
                     </form>
                 </div>
             </div>
-            
+
             <!-- Pop-up Konfirmasi Hapus -->
             <div id="popupHapusTiket" class="popup" style="display: none;">
                 <div class="popup-content">
@@ -153,8 +151,7 @@
     </div>
     <script src="js/profile.js"></script>
     <script src="js/tiket.js"></script>
+
 </body>
 
 </html>
-
-            

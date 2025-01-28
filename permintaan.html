@@ -29,7 +29,8 @@
                 <a href="lokasi.html" class="menu-item"><i class="fa-solid fa-location-dot"></i> Lokasi</a>
                 <a href="datakonser.html" class="menu-item"><i class="fas fa-music"></i> Konser</a>
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
-                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i> Penyelenggara</a>
+                <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i>
+                    Penyelenggara</a>
                 <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
                 <a href="tiket.html" class="menu-item"><i class="fas fa-ticket"></i> Tiket</a>
             </nav>
@@ -61,114 +62,61 @@
                 <!-- Table Section -->
                 <div class="table-container">
                     <h2>Data Permintaan</h2>
-                    <button class="btn add" id="btnTambahPermintaan" aria-label="Tambah Permintaan">Tambah Permintaan</button>
+                    <button class="btn add" id="btnTambahPermintaan" aria-label="Tambah Permintaan">Tambah
+                        Permintaan</button>
                     <table class="data-table">
                         <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Lokasi</th>
                                 <th>Kapasitas Orang</th>
-                                <th>Pilihan Tiket</th>
                                 <th>Status</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr id="row-1">
-                                <td>1</td>
-                                <td>Auditorium ULBI</td>
-                                <td>500</td>
-                                <td>
-                                    <ul>
-                                        <li>VIP - Rp 200,000</li>
-                                        <li>Reguler - Rp 100,000</li>
-                                    </ul>
-                                </td>
-                                <td id="status-1">Ditunda</td>
-                                <td>
-                                    <button class="btn edit" onclick="editLokasi(1)">Edit</button>
-                                    <button class="btn delete" onclick="hapusLokasi(1)">Hapus</button>
-                                </td>
-                            </tr>
-                            <tr id="row-2">
-                                <td>2</td>
-                                <td>Balai Kota</td>
-                                <td>1,000</td>
-                                <td>
-                                    <ul>
-                                        <li>VIP - Rp 300,000</li>
-                                        <li>Reguler - Rp 150,000</li>
-                                    </ul>
-                                </td>
-                                <td id="status-2">Ditunda</td>
-                                <td>
-                                    <button class="btn edit" onclick="editLokasi(2)">Edit</button>
-                                    <button class="btn delete" onclick="hapusLokasi(2)">Hapus</button>
-                                </td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
             </section>
 
             <!-- Popup Form Tambah Permintaan -->
-<div class="popup" id="popupTambahPermintaan" style="display: none;">
-    <div class="popup-content">
-        <h3>Tambah Permintaan</h3>
-        <form id="formTambahPermintaan">
-            <label for="lokasi">Lokasi:</label>
-            <input type="text" id="lokasi" name="lokasi" placeholder="Masukkan lokasi" required>
-
-            <label for="kapasitas">Kapasitas Orang:</label>
-            <input type="number" id="kapasitas" name="kapasitas" placeholder="Masukkan kapasitas" required>
-
-            <label for="pilihanTiket">Pilihan Tiket:</label>
-            <textarea id="pilihanTiket" name="pilihanTiket" placeholder="Masukkan pilihan tiket" required></textarea>
-
-            <div class="popup-actions">
-                <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                <button type="button" class="btn cancel" id="btnBatalTambah" aria-label="Batal">Batal</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-       <!-- Popup Form Edit Permintaan -->
-<div class="popup" id="popupEditPermintaan" style="display: none;">
-    <div class="popup-content">
-        <h3>Edit Permintaan</h3>
-        <form id="formEditPermintaan">
-            <label for="editLokasi">Lokasi:</label>
-            <input type="text" id="editLokasi" name="editLokasi" placeholder="Masukkan lokasi" required>
-
-            <label for="editKapasitas">Kapasitas Orang:</label>
-            <input type="number" id="editKapasitas" name="editKapasitas" placeholder="Masukkan kapasitas" required>
-
-            <label for="editPilihanTiket">Pilihan Tiket:</label>
-            <textarea id="editPilihanTiket" name="editPilihanTiket" placeholder="Masukkan pilihan tiket (contoh: VIP - Rp 200,000; Reguler - Rp 100,000)" required></textarea>
-
-            <label for="editStatus">Status:</label>
-            <select id="editStatus" name="editStatus" required>
-                <option value="Ditunda">Ditunda</option>
-                <option value="Diterima">Diterima</option>
-                <option value="Ditolak">Ditolak</option>
-            </select>
-
-            <div class="popup-actions">
-                <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
-                <button type="button" class="btn cancel" id="btnBatalEdit" aria-label="Batal">Batal</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-            <!-- Pop-up Konfirmasi Hapus -->
-            <div id="popupHapusKonser" class="popup" style="display: none;">
+            <div class="popup" id="popupTambahPermintaan" style="display: none;">
                 <div class="popup-content">
-                    <h3>Konfirmasi Hapus</h3>
-                    <p>Apakah Anda yakin ingin menghapus data ini?</p>
-                    <button id="btnKonfirmasiHapus" class="btn danger">Hapus</button>
-                    <button id="btnBatalHapus" class="btn">Batal</button>
+                    <h3>Tambah Permintaan</h3>
+                    <form id="formTambahPermintaan">
+                        <label for="lokasi">Lokasi:</label>
+                        <input type="text" id="lokasi" name="lokasi" placeholder="Masukkan lokasi" required>
+
+                        <label for="kapasitas">Kapasitas Orang:</label>
+                        <input type="number" id="kapasitas" name="kapasitas" placeholder="Masukkan kapasitas" required>
+
+                        <div class="popup-actions">
+                            <button type="submit" class="btn save" aria-label="Simpan">Simpan</button>
+                            <button type="button" class="btn cancel" id="btnBatalTambah"
+                                aria-label="Batal">Batal</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Popup Form Edit Permintaan -->
+            <div id="popupEditStatus" class="popup" style="display: none;">
+                <div class="popup-content">
+                    <h3>Edit Status Request</h3>
+                    <form id="formEditStatus">
+                        <input type="hidden" id="editRequestId">
+                        <label for="editStatus">Status:</label>
+                        <select id="editStatus" required>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <div class="popup-actions">
+                            <button type="submit" class="btn">Simpan Perubahan</button>
+                            <button type="button" id="btnBatalEditStatus" class="btn">Batal</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 

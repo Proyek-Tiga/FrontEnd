@@ -1,168 +1,166 @@
-// Referensi elemen
-const btnTambahPermintaan = document.getElementById('btnTambahPermintaan');
-const popupTambahPermintaan = document.getElementById('popupTambahPermintaan');
-const btnBatalTambah = document.getElementById('btnBatalTambah');
-const formTambahPermintaan = document.getElementById('formTambahPermintaan');
-const tabelBody = document.querySelector('.data-table tbody');
+const tableBody = document.querySelector(".data-table tbody");
+// Fungsi untuk mendekode token JWT
+function decodeJwt(token) {
+  const base64Url = token.split(".")[1]; // Ambil bagian payload (second part of JWT)
+  const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/"); // Decode URL-safe Base64
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(function (c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  return JSON.parse(jsonPayload); // Kembalikan payload yang sudah didekode
+}
 
-// Event untuk menampilkan popup tambah permintaan
-btnTambahPermintaan.addEventListener('click', () => {
-    popupTambahPermintaan.style.display = 'flex';
-});
+// Contoh penggunaan
+const token = localStorage.getItem("authToken");
+const decoded = decodeJwt(token);
 
-// Event untuk menutup popup tambah permintaan
-btnBatalTambah.addEventListener('click', () => {
-    popupTambahPermintaan.style.display = 'none';
-});
+const userId = decoded.user_id; // Mengambil user_id dari payload token
 
-// Event untuk form submit (menambah data permintaan ke tabel dan database)
-formTambahPermintaan.addEventListener('submit', async (event) => {
-    event.preventDefault();
+console.log("User ID:", userId);
 
-    const lokasi = document.getElementById('lokasi').value;
-    const kapasitas = document.getElementById('kapasitas').value;
-    const pilihanTiket = document.getElementById('pilihanTiket').value;
+async function fetchRequest() {
+  try {
+    const response = await fetch("https://tiket-backend-theta.vercel.app/api/request", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-    if (!lokasi || !kapasitas || !pilihanTiket) {
-        Swal.fire('Gagal!', 'Semua kolom wajib diisi!', 'error');
-        return;
-    }
+    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-    const data = {
-        lokasi: lokasi,
-        kapasitas: parseInt(kapasitas),
-        tiket: pilihanTiket.split('\n').map(tiket => {
-            const [tipe, harga] = tiket.split(' - ');
-            return { tipe, harga };
-        }),
-    };
+    const requestList = await response.json();
 
-    try {
-        // Kirim data ke backend
-        const response = await fetch('http://localhost:5000/api/permintaan', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        });
+    tableBody.innerHTML = ""; // Clear existing table rows
 
-        if (!response.ok) {
-            throw new Error('Gagal menambahkan permintaan ke database!');
-        }
-
-        const result = await response.json();
-
-        // Tambahkan data ke tabel di frontend
-        const rowCount = tabelBody.rows.length + 1;
-        const newRow = `
-            <tr>
-                <td>${rowCount}</td>
-                <td>${result.lokasi}</td>
-                <td>${result.kapasitas}</td>
-                <td>
-                    <ul>
-                        ${result.tiket.map(tiket => `<li>${tiket.tipe} - Rp ${tiket.harga}</li>`).join('')}
-                    </ul>
-                </td>
-                <td id="status-${rowCount}">${result.status || 'Ditunda'}</td>
-                <td>
-                    <button class="btn edit" onclick="editPermintaan(${rowCount})">Edit</button>
-                    <button class="btn delete" onclick="hapusPermintaan(${rowCount})">Hapus</button>
-                </td>
-            </tr>
+    requestList.forEach((item, index) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${item.nama_lokasi}</td>
+            <td>${item.kapasitas}</td>
+            <td>${item.status}</td>
+            <td>
+                <button class="btn-edit" onclick="editRequest('${item.request_id}', '${item.status}')">Edit</button>
+            </td>
         `;
-        tabelBody.insertAdjacentHTML('beforeend', newRow);
+      tableBody.appendChild(row);
+    });
+  } catch (error) {
+    console.error("Error fetching requests:", error);
+    alert("Gagal mengambil data request. Silakan coba lagi.");
+  }
+}
 
-        // Reset form dan tutup popup
-        formTambahPermintaan.reset();
-        popupTambahPermintaan.style.display = 'none';
+function editRequest(requestId, currentStatus) {
+  // Set nilai requestId dan status saat ini pada popup
+  document.getElementById("editRequestId").value = requestId;
+  document.getElementById("editStatus").value = currentStatus;
 
-        Swal.fire('Berhasil!', 'Permintaan berhasil ditambahkan.', 'success');
-    } catch (error) {
-        Swal.fire('Gagal!', error.message, 'error');
-    }
+  // Tampilkan popup
+  document.getElementById("popupEditStatus").style.display = "block";
+}
+
+// Fungsi untuk menyimpan perubahan status
+document.getElementById("formEditStatus").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const requestId = document.getElementById("editRequestId").value;
+  const status = document.getElementById("editStatus").value;
+
+  const data = JSON.stringify({
+    status: status,
+  });
+
+  console.log(data);
+
+  fetch(`https://tiket-backend-theta.vercel.app/api/requests/${requestId}/status`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: data,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert("Status berhasil diubah");
+      fetchRequest(); // Reload data request
+      document.getElementById("popupEditStatus").style.display = "none"; // Hide popup
+    })
+    .catch((error) => {
+      console.error("Error updating status:", error);
+      alert("Gagal mengubah status");
+    });
 });
 
-// Event untuk menghapus atau mengedit data
-tabelBody.addEventListener('click', (event) => {
-    const target = event.target;
+function editRequest(requestId, currentStatus) {
+  // Set nilai requestId dan status saat ini pada popup
+  document.getElementById("editRequestId").value = requestId;
+  document.getElementById("editStatus").value = currentStatus;
 
-    // Menghapus permintaan
-    if (target.classList.contains('delete')) {
-        const row = target.closest('tr');
-        const lokasi = row.cells[1].textContent;
+  // Tampilkan popup
+  document.getElementById("popupEditStatus").style.display = "block";
+}
 
-        Swal.fire({
-            title: `Hapus permintaan untuk lokasi ${lokasi}?`,
-            text: 'Data ini akan dihapus secara permanen.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                tabelBody.removeChild(row);
-                [...tabelBody.rows].forEach((row, index) => {
-                    row.cells[0].textContent = index + 1;
-                });
-                Swal.fire('Terhapus!', 'Data permintaan berhasil dihapus.', 'success');
-            }
-        });
-    }
+// Menutup popup jika batal edit status
+document.getElementById("btnBatalEditStatus").onclick = function () {
+  document.getElementById("popupEditStatus").style.display = "none";
+};
 
-    // Mengedit permintaan
-    if (target.classList.contains('edit')) {
-        const row = target.closest('tr');
-        const lokasi = row.cells[1].textContent;
-        const kapasitas = row.cells[2].textContent;
-        const tiketList = row.cells[3].textContent.split('\n').map(tiket => tiket.trim()).filter(Boolean);
-
-        Swal.fire({
-            title: 'Edit Permintaan',
-            html: `
-                <label for="swalLokasi">Lokasi:</label>
-                <input type="text" id="swalLokasi" class="swal2-input" value="${lokasi}">
-                <label for="swalKapasitas">Kapasitas Orang:</label>
-                <input type="number" id="swalKapasitas" class="swal2-input" value="${kapasitas}">
-                <label for="swalPilihanTiket">Pilihan Tiket:</label>
-                <textarea id="swalPilihanTiket" class="swal2-input">${tiketList.join('\n')}</textarea>
-            `,
-            focusConfirm: false,
-            showCancelButton: true,
-            confirmButtonText: 'Simpan',
-            cancelButtonText: 'Batal',
-            preConfirm: () => {
-                const newLokasi = document.getElementById('swalLokasi').value;
-                const newKapasitas = document.getElementById('swalKapasitas').value;
-                const newPilihanTiket = document.getElementById('swalPilihanTiket').value;
-
-                if (!newLokasi || !newKapasitas || !newPilihanTiket) {
-                    Swal.showValidationMessage('Semua kolom wajib diisi!');
-                }
-
-                return { newLokasi, newKapasitas, newPilihanTiket };
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const { newLokasi, newKapasitas, newPilihanTiket } = result.value;
-                const tiketArray = newPilihanTiket.split('\n').map(tiket => {
-                    const [tipe, harga] = tiket.split(' - ');
-                    return { tipe, harga };
-                });
-
-                row.cells[1].textContent = newLokasi;
-                row.cells[2].textContent = newKapasitas;
-                row.cells[3].innerHTML = `
-                    <ul>
-                        ${tiketArray.map(tiket => `<li>${tiket.tipe} - Rp ${tiket.harga}</li>`).join('')}
-                    </ul>
-                `;
-
-                Swal.fire('Berhasil!', 'Permintaan berhasil diperbarui.', 'success');
-            }
-        });
-    }
+// Tampilkan popup saat tombol tambah permintaan diklik
+document.getElementById("btnTambahPermintaan").addEventListener("click", function () {
+  document.getElementById("popupTambahPermintaan").style.display = "block";
 });
+
+// Menutup popup saat tombol batal diklik
+document.getElementById("btnBatalTambah").addEventListener("click", function () {
+  document.getElementById("popupTambahPermintaan").style.display = "none";
+});
+
+// Menangani pengiriman form untuk tambah permintaan
+document.getElementById("formTambahPermintaan").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const lokasi = document.getElementById("lokasi").value;
+  const kapasitas = parseInt(document.getElementById("kapasitas").value);
+
+  if (!userId) {
+    alert("Token tidak valid atau user_id tidak ditemukan.");
+    return;
+  }
+
+  const data = JSON.stringify({
+    user_id: userId, // Gunakan user_id dari token
+    nama_lokasi: lokasi,
+    kapasitas: kapasitas,
+  });
+
+  console.log(data);
+
+  // Kirim data ke server
+  fetch("https://tiket-backend-theta.vercel.app/api/request", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: data,
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert("Permintaan berhasil ditambahkan!");
+      fetchRequest();
+      document.getElementById("popupTambahPermintaan").style.display = "none"; // Tutup popup
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert("Gagal menambahkan permintaan.");
+    });
+});
+
+// Fetch and populate data on page load
+fetchRequest();
