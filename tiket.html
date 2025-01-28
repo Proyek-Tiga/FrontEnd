@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="css/lokasi.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <link rel="stylesheet" href="css/tiket.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- Font Chewy -->
@@ -31,7 +33,7 @@
                 <a href="pembeli.html" class="menu-item"><i class="fas fa-users"></i> Pembeli</a>
                 <a href="penyelenggara.html" class="menu-item"><i class="fa-solid fa-users-rectangle"></i></i> Penyelenggara</a>
                 <a href="transaksi.html" class="menu-item"><i class="fas fa-receipt"></i> Transaksi</a>
-                <a href="tiket.html" class="menu-item  active"><i class="fas fa-ticket"></i> Tiket</a>
+                <a href="tiket.html" class="menu-item active"><i class="fas fa-ticket"></i> Tiket</a>
             </nav>
         </aside>
 
@@ -72,11 +74,24 @@
                                 <th>Aksi</th>
                             </tr>
                         </thead>
-                        <tbody id="tiketTableBody"></tbody>
+                        <tbody id="tiketTableBody">
+                            <!-- Contoh Data -->
+                            <tr data-id="1">
+                                <td>1</td>
+                                <td>Tiket VIP</td>
+                                <td>500000</td>
+                                <td>Konser Musik</td>
+                                <td>100</td>
+                                <td>
+                                    <button class="btn edit" data-id="1" aria-label="Edit Tiket"><i class="fas fa-edit"></i></button>
+                                    <button class="btn delete" data-id="1" aria-label="Hapus Tiket"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
                 </div>
             </section>
-            
+
             <!-- Popup Form Tambah Tiket -->
             <div class="popup" id="popupTambahTiket" style="display: none;">
                 <div class="popup-content">
@@ -107,6 +122,7 @@
                 <div class="popup-content">
                     <h3>Edit Tiket</h3>
                     <form id="formEditTiket">
+                        <input type="hidden" id="editTiketId">
                         <label for="editNamaTiket">Nama Tiket:</label>
                         <input type="text" id="editNamaTiket" required>
                         
@@ -135,8 +151,10 @@
             </div>
         </main>
     </div>
-    <!-- Link to external JS file -->
     <script src="js/profile.js"></script>
     <script src="js/tiket.js"></script>
+</body>
+
+</html>
 
             

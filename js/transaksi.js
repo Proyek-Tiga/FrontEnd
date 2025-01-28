@@ -1,38 +1,57 @@
-document.querySelectorAll(".btn.detail").forEach((button) => {
-    button.addEventListener("click", function () {
-      const row = this.closest("tr");
-      const ticketNo = row.cells[1].textContent;
-      const ticketDate = row.cells[2].textContent;
-      const concertName = row.cells[3].textContent;
-      const buyerName = row.cells[4].textContent;
-      const ticketQuantity = row.cells[5].textContent;
-      const totalPrice = row.cells[6].textContent;
-      const qrCodeSrc = row.cells[7].querySelector("img").src;
-  
-      // Isi modal dengan data
-      document.getElementById("ticket-no").textContent = ticketNo;
-      document.getElementById("ticket-date").textContent = ticketDate;
-      document.getElementById("concert-name").textContent = concertName;
-      document.getElementById("buyer-name").textContent = buyerName;
-      document.getElementById("ticket-quantity").textContent = ticketQuantity;
-      document.getElementById("total-price").textContent = totalPrice;
-      document.getElementById("qrcode-img").src = qrCodeSrc;
-  
-      // Tampilkan modal
-      document.getElementById("eticket-modal").style.display = "block";
+// JS Code for Modal
+document.addEventListener("DOMContentLoaded", () => {
+    const detailButtons = document.querySelectorAll(".btn.detail");
+    const modal = document.getElementById("transaction-modal");
+    const modalContent = document.getElementById("transaction-detail");
+    const closeModal = document.querySelector(".close-btn");
+
+    const transactions = {
+        "1": {
+            noTiket: "TX12345",
+            tanggal: "2024-12-30",
+            namaKonser: "Konser A",
+            nama: "Ahmad Taufik",
+            jumlahTiket: 2,
+            total: "Rp 200,000",
+            qrCode: "qrcode1.png",
+        },
+        "2": {
+            noTiket: "TX12346",
+            tanggal: "2024-12-31",
+            namaKonser: "Konser B",
+            nama: "Siti Aisyah",
+            jumlahTiket: 3,
+            total: "Rp 300,000",
+            qrCode: "qrcode2.png",
+        },
+    };
+
+    detailButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const id = button.dataset.id;
+            const data = transactions[id];
+            if (data) {
+                modalContent.innerHTML = `
+                    <strong>No. Tiket:</strong> ${data.noTiket}<br>
+                    <strong>Tanggal:</strong> ${data.tanggal}<br>
+                    <strong>Nama Konser:</strong> ${data.namaKonser}<br>
+                    <strong>Nama:</strong> ${data.nama}<br>
+                    <strong>Jumlah Tiket:</strong> ${data.jumlahTiket}<br>
+                    <strong>Total:</strong> ${data.total}<br>
+                    <strong>QR Code:</strong> <img src="${data.qrCode}" alt="QR Code" style="width:100px;">
+                `;
+                modal.style.display = "block";
+            }
+        });
     });
-  });
-  
-  // Tutup modal
-  document.querySelector(".close-btn").addEventListener("click", function () {
-    document.getElementById("eticket-modal").style.display = "none";
-  });
-  
-  // Tutup modal jika klik di luar modal
-  window.addEventListener("click", function (e) {
-    const modal = document.getElementById("eticket-modal");
-    if (e.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-  
+
+    closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener("click", event => {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+});

@@ -60,7 +60,6 @@
                 <!-- Table Section -->
                 <div class="table-container">
                     <h2>Data Transaksi</h2>
-                    <button class="btn add" id="btnTambahKonser" aria-label="Tambah Konser">Tambah Transaksi</button>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -86,7 +85,7 @@
                                 <td>Rp 200,000</td>
                                 <td><img src="qrcode1.png" alt="QR Code"></td>
                                 <td>
-                                    <button class="btn detail" data-id="1"><i class="fas fa-info-circle"></i></button>
+                                    <button class="btn detail" data-id="1"><i class="fas fa-info-circle"></i> Detail</button>
                                 </td>
                             </tr>
                             <tr>
@@ -99,101 +98,27 @@
                                 <td>Rp 300,000</td>
                                 <td><img src="qrcode2.png" alt="QR Code"></td>
                                 <td>
-                                    <button class="btn detail" data-id="2"><i class="fas fa-info-circle"></i></button>
+                                    <button class="btn detail" data-id="2"><i class="fas fa-info-circle"></i> Detail</button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
-
-            <!-- Pop-up Tambah Transaksi -->
-            <div class="popup" id="add-popup" style="display: none;">
-                <div class="popup-content">
-                    <h3>Tambah Transaksi</h3>
-                    <form id="add-form">
-                        <div class="popup-detail-item">
-                            <label for="add-tiket">No. Tiket:</label>
-                            <input type="text" id="add-tiket" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="add-tanggal">Tanggal:</label>
-                            <input type="date" id="add-tanggal" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="add-konser">Nama Konser:</label>
-                            <input type="text" id="add-konser" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="add-nama">Nama:</label>
-                            <input type="text" id="add-nama" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="add-jumlah">Jumlah Tiket:</label>
-                            <input type="number" id="add-jumlah" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="add-total">Total:</label>
-                            <input type="text" id="add-total" required>
-                        </div>
-                        <div class="popup-actions">
-                            <button type="submit" class="btn simpan">Simpan</button>
-                            <button type="button" class="btn batal add-close-btn">Batal</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Pop-up Edit Transaksi -->
-            <div id="edit-popup" class="popup" style="display: none;">
-                <div class="popup-content">
-                    <h3>Edit Transaksi</h3>
-                    <form id="edit-form">
-                        <div class="popup-detail-item">
-                            <label for="edit-tiket">No. Tiket:</label>
-                            <input type="text" id="edit-tiket" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="edit-tanggal">Tanggal:</label>
-                            <input type="date" id="edit-tanggal" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="edit-konser">Nama Konser:</label>
-                            <input type="text" id="edit-konser" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="edit-nama">Nama:</label>
-                            <input type="text" id="edit-nama" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="edit-jumlah">Jumlah Tiket:</label>
-                            <input type="number" id="edit-jumlah" required>
-                        </div>
-                        <div class="popup-detail-item">
-                            <label for="edit-total">Total:</label>
-                            <input type="text" id="edit-total" required>
-                        </div>
-                        <div class="popup-actions">
-                            <button type="submit" class="btn simpan">Simpan</button>
-                            <button type="button" class="btn batal close-btn">Batal</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-            <!-- Pop-up Konfirmasi Hapus Transaksi -->
-            <div id="delete-popup" class="popup" style="display: none;">
-                <div class="popup-content">
-                    <h2>Hapus Transaksi</h2>
-                    <p>Apakah Anda yakin ingin menghapus transaksi ini?</p>
-                    <button id="confirm-delete" class="btn">Ya, Hapus</button>
-                    <button id="cancel-delete" class="btn">Batal</button>
-                </div>
-            </div>
         </main>
     </div>
+
+    <!-- Modal Popup -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Detail Transaksi</h2>
+            <p id="transaction-detail"></p>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
     <script src="js/transaksi.js"></script>
-    <script src="js/profile.js"></script>
 </body>
 
 </html>
