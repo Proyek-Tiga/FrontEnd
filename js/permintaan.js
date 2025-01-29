@@ -45,7 +45,9 @@ async function fetchRequest() {
             <td>${item.kapasitas}</td>
             <td>${item.status}</td>
             <td>
-                <button class="btn-edit" onclick="editRequest('${item.request_id}', '${item.status}')">Edit</button>
+                <button class="btn edit" onclick="editRequest('${item.request_id}', '${item.status}')" aria-label="Edit">
+                <i class="fas fa-edit"></i> Edit
+                </button>
             </td>
         `;
       tableBody.appendChild(row);

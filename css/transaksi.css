@@ -292,7 +292,10 @@ body {
   font-size: 12px;
   font-weight: bold;
 }
-
+.btn.detail {
+  background-color: #2196F3;
+  color: #fff;
+}
 .modal {
   display: none;
   position: fixed;

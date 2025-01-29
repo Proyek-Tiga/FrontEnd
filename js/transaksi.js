@@ -32,9 +32,12 @@ function renderTransaksiTable(data) {
         <td>${item.transaksi.qty}</td>
         <td>Rp${(item.transaksi.harga * item.transaksi.qty).toLocaleString()}</td>
         <td><img src="${item.transaksi.qrcode}" alt="QR Code" width="50"></td>
-        <td>
-            <button class="btn-detail" onclick="showTransactionDetail(${index})">Detail</button>
-        </td>
+       <td>
+          <button class="btn detail" onclick="showTransactionDetail(${index})" aria-label="Detail">
+          <i class="fas fa-info-circle"></i> Detail
+          </button>
+      </td>
+
 
       `;
 

@@ -129,8 +129,13 @@ async function loadTiketData() {
                 <td>${tiket.nama_konser}</td>
                 <td>${tiket.jumlah_tiket}</td>
                 <td>
-                    <button class="btn edit-btn" onclick="openEditPopup('${tiket.tiket_id}', '${tiket.nama_tiket}', ${tiket.harga}, '${tiket.jumlah_tiket}', '${tiket.konser_id}')">Edit</button>
-                    <button class="btn delete-btn" onclick="openDeletePopup('${tiket.tiket_id}')">Hapus</button>
+                <button class="btn edit" onclick="openEditPopup('${tiket.tiket_id}', '${tiket.nama_tiket}', ${tiket.harga}, '${tiket.jumlah_tiket}', '${tiket.konser_id}')" aria-label="Edit">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn delete" onclick="openDeletePopup('${tiket.tiket_id}')" aria-label="Hapus">
+                  <i class="fas fa-trash"></i> Hapus
+                </button>
+              </td>
         `;
       tableBody.appendChild(row);
     });
