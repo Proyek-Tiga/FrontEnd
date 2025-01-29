@@ -1,124 +1,52 @@
-// Referensi elemen
-const btnTambahKonser = document.getElementById('btnTambahKonser');
-const popupTambahKonser = document.getElementById('popupTambahKonser');
-const btnBatalTambah = document.getElementById('btnBatalTambah');
-const formTambahKonser = document.getElementById('formTambahKonser');
-const tabelBody = document.querySelector('.data-table tbody');
-
 const token = localStorage.getItem("authToken");
-if (token) {
-    console.log("Token ditemukan:", token);
-} else {
-    console.log("Token tidak ditemukan. Harap login ulang.");
+if (!token) {
+    alert('Token tidak ditemukan. Harap login terlebih dahulu');
+    window.location.href = "proyek-tiga.github.io/login";
 }
 
-// Event untuk menampilkan popup tambah konser
-btnTambahKonser.addEventListener('click', () => {
-    popupTambahKonser.style.display = 'flex';
-});
-
-// Event untuk menutup popup tambah konser
-btnBatalTambah.addEventListener('click', () => {
-    popupTambahKonser.style.display = 'none';
-});
-
-// Event untuk form submit (menambah data konser ke tabel)
-formTambahKonser.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const lokasi = document.getElementById('lokasi').value;
-    const kapasitas = document.getElementById('kapasitas').value;
-
-    if (!lokasi || !kapasitas) {
-        Swal.fire('Gagal!', 'Semua kolom wajib diisi!', 'error');
-        return;
-    }
-
-    const rowCount = tabelBody.rows.length + 1;
-    const newRow = `
-        <tr>
-            <td>${rowCount}</td>
-            <td>${lokasi}</td>
-            <td>${kapasitas}</td>
-            <td>
-                <button class="btn edit">Edit</button>
-                <button class="btn delete">Hapus</button>
-            </td>
-        </tr>
-    `;
-    tabelBody.insertAdjacentHTML('beforeend', newRow);
-
-    formTambahKonser.reset();
-    popupTambahKonser.style.display = 'none';
-
-    Swal.fire('Berhasil!', 'Data konser berhasil ditambahkan.', 'success');
-});
-
-// Event untuk menghapus atau mengedit data
-tabelBody.addEventListener('click', (event) => {
-    const target = event.target;
-
-    if (target.classList.contains('delete')) {
-        const row = target.closest('tr');
-        const lokasi = row.cells[1].textContent;
-
-        Swal.fire({
-            title: `Hapus konser di ${lokasi}?`,
-            text: 'Data ini akan dihapus secara permanen.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, hapus!',
-            cancelButtonText: 'Batal',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                tabelBody.removeChild(row);
-                [...tabelBody.rows].forEach((row, index) => {
-                    row.cells[0].textContent = index + 1;
-                });
-                Swal.fire('Terhapus!', 'Data konser berhasil dihapus.', 'success');
+// Fungsi umum untuk mengambil data dari API
+async function fetchData(endpoint, index) {
+    try {
+        const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
             }
         });
+
+        if (!response.ok) {
+            throw new Error(`Gagal mengambil data dari ${endpoint}. Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(`Data dari ${endpoint}:`, data);
+
+        const elements = document.querySelectorAll(".cards-container .card .card-info p strong");
+
+        if (endpoint.includes("transaksi")) {
+            // Hitung total transaksi (jumlah transaksi yang terjadi)
+            elements[index].textContent = data.length;
+        } else if (Array.isArray(data) && elements.length > index) {
+            elements[index].textContent = data.length;
+        }
+    } catch (error) {
+        console.error(`Error fetching data from ${endpoint}:`, error);
     }
+}
 
-    if (target.classList.contains('edit')) {
-        const row = target.closest('tr');
-        const lokasi = row.cells[1].textContent;
-        const kapasitas = row.cells[2].textContent;
+// Panggil fungsi fetchData untuk setiap endpoint
+const endpoints = [
+    { url: "https://tiket-backend-theta.vercel.app/api/request", index: 0 }, // Permintaan
+    { url: "https://tiket-backend-theta.vercel.app/api/lokasi", index: 1 }, // Lokasi
+    { url: "https://tiket-backend-theta.vercel.app/api/konser", index: 2 }, // Konser
+    { url: "https://tiket-backend-theta.vercel.app/api/users?role_name=pembeli", index: 3 }, // Pembeli
+    { url: "https://tiket-backend-theta.vercel.app/api/transaksi", index: 4 }, // Transaksi
+    { url: "https://tiket-backend-theta.vercel.app/api/tiket", index: 5 } // Tiket
+];
 
-        Swal.fire({
-            title: 'Edit Data Konser',
-            html: `
-                <label for="swalLokasi">Lokasi:</label>
-                <input type="text" id="swalLokasi" class="swal2-input" value="${lokasi}">
-                <label for="swalKapasitas">Kapasitas Orang:</label>
-                <input type="number" id="swalKapasitas" class="swal2-input" value="${kapasitas}">
-            `,
-            focusConfirm: false,
-            showCancelButton: true,
-            confirmButtonText: 'Simpan',
-            cancelButtonText: 'Batal',
-            preConfirm: () => {
-                const newLokasi = document.getElementById('swalLokasi').value;
-                const newKapasitas = document.getElementById('swalKapasitas').value;
-
-                if (!newLokasi || !newKapasitas) {
-                    Swal.showValidationMessage('Semua kolom wajib diisi!');
-                }
-
-                return { newLokasi, newKapasitas };
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const { newLokasi, newKapasitas } = result.value;
-                row.cells[1].textContent = newLokasi;
-                row.cells[2].textContent = newKapasitas;
-
-                Swal.fire('Berhasil!', 'Data konser berhasil diperbarui.', 'success');
-            }
-        });
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    endpoints.forEach(endpoint => fetchData(endpoint.url, endpoint.index));
 });
 
 function logout() {
